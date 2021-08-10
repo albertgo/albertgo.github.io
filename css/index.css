@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+  body{
+    background-color: black ;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.social-instagram{
+    font-size: 2rem; color: grey; margin-left: 5px;
+}
+.social-instagram:hover{
+    color:lightcoral;
+}
+
+.social-twitter{
+    font-size: 2rem; color: grey; margin-left: 5px;
+}
+
+.social-twitter:hover{
+    color:lightskyblue;;
+}
+
+.social-linkedin{
+    font-size: 2rem; color: grey; margin-left: 5px;
+}
+.social-linkedin:hover{
+    color:dodgerblue;   
+}
