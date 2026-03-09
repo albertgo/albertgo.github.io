@@ -3,158 +3,139 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Albert González Rossell — Full Stack Developer</title>
+  <title>Albert Gonzàlez Rossell — Full Stack Developer</title>
   <meta name="description" content="Full Stack Developer. Laravel, Vue.js, sistemes complexos." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --bg:     #080810;
-      --bg2:    #0e0e1a;
-      --bg3:    #13131f;
-      --border: rgba(255,255,255,0.06);
-      --text:   #f0f0ff;
-      --muted:  #6060a0;
-      --neon-g: #00ffaa;
-      --neon-p: #bf5fff;
-      --neon-b: #00cfff;
-      --neon-y: #ffdd00;
-      --mono:   'JetBrains Mono', monospace;
-      --sans:   'Space Grotesk', sans-serif;
+    :root{--bg:#080810;--bg2:#0e0e1a;--bg3:#13131f;--border:rgba(255,255,255,0.06);--text:#f0f0ff;--muted:#6060a0;--neon-g:#00ffaa;--neon-p:#bf5fff;--neon-b:#00cfff;--neon-y:#ffdd00;--mono:"JetBrains Mono",monospace;--sans:"Space Grotesk",sans-serif;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden;}
+    body::after{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;background:rgba(8,8,16,0.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:var(--mono);font-size:0.85rem;font-weight:500;color:var(--neon-g);letter-spacing:0.05em;}
+    .nav-logo em{color:var(--muted);font-style:normal;}
+    .nav-right{display:flex;align-items:center;gap:1.5rem;}
+    nav ul{display:flex;gap:1.5rem;list-style:none;}
+    nav ul a{text-decoration:none;color:var(--muted);font-family:var(--mono);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s;}
+    nav ul a:hover{color:var(--neon-g);}
+    .lang-switcher{display:flex;gap:2px;background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:3px;}
+    .lang-btn{background:none;border:none;cursor:pointer;font-family:var(--mono);font-size:0.65rem;color:var(--muted);padding:4px 8px;border-radius:3px;transition:all 0.15s;text-transform:uppercase;letter-spacing:0.06em;}
+    .lang-btn:hover{color:var(--text);}
+    .lang-btn.active{background:var(--neon-g);color:#080810;font-weight:600;}
+    main{max-width:1200px;margin:0 auto;padding:5.5rem 1.5rem 2rem;}
+    .bento{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:80px;gap:12px;}
+    .card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:1.5rem;overflow:hidden;position:relative;transition:border-color 0.25s,transform 0.25s;}
+    .card:hover{transform:translateY(-2px);}
+    .card::before{content:"";position:absolute;inset:0;border-radius:inherit;opacity:0;transition:opacity 0.3s;pointer-events:none;}
+    .card:hover::before{opacity:1;}
+    .card-g::before{box-shadow:inset 0 0 40px rgba(0,255,170,0.06);}
+    .card-p::before{box-shadow:inset 0 0 40px rgba(191,95,255,0.08);}
+    .card-b::before{box-shadow:inset 0 0 40px rgba(0,207,255,0.07);}
+    .card-y::before{box-shadow:inset 0 0 40px rgba(255,221,0,0.07);}
+    .card-g:hover{border-color:rgba(0,255,170,0.3);}
+    .card-p:hover{border-color:rgba(191,95,255,0.3);}
+    .card-b:hover{border-color:rgba(0,207,255,0.3);}
+    .card-y:hover{border-color:rgba(255,221,0,0.3);}
+    .card-label{font-family:var(--mono);font-size:0.65rem;color:var(--neon-b);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.75rem;}
+    .card-hero{grid-column:1/8;grid-row:1/5;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(135deg,#0e0e1a 60%,#141428);padding:2rem;}
+    .hero-eyebrow{font-family:var(--mono);font-size:0.7rem;color:var(--neon-g);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:0.6rem;}
+    .hero-eyebrow::before{content:"";width:1.5rem;height:1px;background:var(--neon-g);}
+    .card-hero h1{font-size:clamp(2.2rem,4vw,3.8rem);font-weight:700;line-height:1;letter-spacing:-0.03em;margin-bottom:1rem;}
+    .card-hero h1 .name-ghost{display:block;-webkit-text-stroke:1px rgba(255,255,255,0.55);color:transparent;}
+    .card-hero h1 .name-neon{display:block;color:var(--neon-g);}
+    .card-hero p{color:var(--muted);font-size:0.9rem;line-height:1.65;max-width:400px;margin-bottom:1.5rem;}
+    .hero-btns{display:flex;gap:0.6rem;flex-wrap:wrap;}
+    .hero-dots{position:absolute;top:1.5rem;right:1.5rem;display:grid;grid-template-columns:repeat(5,1fr);gap:6px;}
+    .hero-dots span{width:4px;height:4px;border-radius:50%;background:var(--border);display:block;}
+    .hero-dots span.lit{background:var(--neon-g);box-shadow:0 0 6px var(--neon-g);}
+    .btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.6rem 1.2rem;border-radius:6px;font-family:var(--mono);font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all 0.2s;}
+    .btn-neon{background:var(--neon-g);color:#080810;font-weight:600;}
+    .btn-neon:hover{box-shadow:0 0 20px rgba(0,255,170,0.5);transform:translateY(-1px);}
+    .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border);}
+    .btn-ghost:hover{border-color:var(--neon-g);color:var(--neon-g);}
+    .card-status{grid-column:8/13;grid-row:1/3;display:flex;flex-direction:column;justify-content:center;gap:1rem;}
+    .status-row{display:flex;align-items:center;gap:0.75rem;}
+    .status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;animation:pulse 2.5s ease-in-out infinite;}
+    .dot-green{background:var(--neon-g);box-shadow:0 0 8px var(--neon-g);}
+    .dot-purple{background:var(--neon-p);box-shadow:0 0 8px var(--neon-p);animation-delay:0.5s;}
+    .dot-blue{background:var(--neon-b);box-shadow:0 0 8px var(--neon-b);animation-delay:1s;}
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+    .status-text strong{display:block;font-size:0.82rem;font-weight:600;}
+    .status-text span{font-family:var(--mono);font-size:0.68rem;color:var(--muted);}
+    .card-role{grid-column:8/13;grid-row:3/5;display:flex;flex-direction:column;justify-content:center;}
+    .card-role .role-label{font-family:var(--mono);font-size:0.65rem;color:var(--neon-p);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;}
+    .card-role .role-title{font-size:1.3rem;font-weight:700;line-height:1.2;margin-bottom:0.4rem;white-space:pre-line;}
+    .card-role .role-sub{font-family:var(--mono);font-size:0.7rem;color:var(--muted);}
+    .card-about{grid-column:1/6;grid-row:5/8;display:flex;flex-direction:column;justify-content:space-between;}
+    .card-about p{color:var(--muted);font-size:0.88rem;line-height:1.7;}
+    .about-footer{display:flex;gap:1rem;margin-top:1rem;flex-wrap:wrap;}
+    .about-chip{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.06em;padding:0.25rem 0.7rem;border-radius:20px;border:1px solid var(--border);color:var(--muted);}
+    .card-stack{grid-column:6/13;grid-row:5/8;}
+    .tag-cloud{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.75rem;}
+    .tech-tag{font-family:var(--mono);font-size:0.68rem;padding:0.3rem 0.75rem;border-radius:4px;border:1px solid var(--border);color:var(--text);background:var(--bg3);cursor:default;transition:all 0.15s;letter-spacing:0.03em;}
+    .tech-tag:hover{color:var(--neon-g);border-color:rgba(0,255,170,0.4);}
+    .tech-tag.hot{color:var(--neon-g);border-color:rgba(0,255,170,0.25);background:rgba(0,255,170,0.05);}
+    .tech-tag.med{color:var(--neon-p);border-color:rgba(191,95,255,0.25);background:rgba(191,95,255,0.05);}
+    .card-projects{grid-column:1/9;grid-row:8/13;display:flex;flex-direction:column;}
+    .project-list{display:flex;flex-direction:column;gap:0;margin-top:0.75rem;overflow-y:auto;flex:1;scrollbar-width:thin;scrollbar-color:rgba(0,207,255,0.35) transparent;}
+    .project-list::-webkit-scrollbar{width:4px;}
+    .project-list::-webkit-scrollbar-track{background:transparent;}
+    .project-list::-webkit-scrollbar-thumb{background:rgba(0,207,255,0.35);border-radius:2px;}
+    .project-list::-webkit-scrollbar-thumb:hover{background:rgba(0,207,255,0.65);}
+    .project-row{display:flex;align-items:flex-start;gap:1rem;padding:0.85rem 0;border-bottom:1px solid var(--border);cursor:default;transition:background 0.15s,padding-left 0.15s;border-radius:4px;}
+    .project-row:last-child{border-bottom:none;}
+    .project-row:hover{background:rgba(255,255,255,0.02);padding-left:0.5rem;}
+    .proj-num{font-family:var(--mono);font-size:0.65rem;color:var(--muted);min-width:2rem;padding-top:2px;}
+    .proj-body{flex:1;}
+    .proj-title{font-size:0.88rem;font-weight:600;margin-bottom:0.2rem;}
+    .proj-desc{font-size:0.78rem;color:var(--muted);line-height:1.5;}
+    .proj-tags{display:flex;gap:0.3rem;flex-wrap:wrap;margin-top:0.4rem;}
+    .proj-tag{font-family:var(--mono);font-size:0.6rem;padding:2px 6px;border-radius:3px;background:rgba(0,207,255,0.08);color:var(--neon-b);border:1px solid rgba(0,207,255,0.15);}
+    .card-contact{grid-column:9/13;grid-row:8/10;display:flex;flex-direction:column;justify-content:center;}
+    .card-contact h3{font-size:1.1rem;font-weight:700;margin-bottom:0.3rem;}
+    .card-contact p{color:var(--muted);font-size:0.8rem;line-height:1.6;margin-bottom:1rem;}
+    .card-links{grid-column:9/13;grid-row:10/13;display:flex;flex-direction:column;gap:0.5rem;justify-content:center;}
+    .link-row{display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0.75rem;border-radius:8px;border:1px solid var(--border);text-decoration:none;color:var(--text);font-family:var(--mono);font-size:0.72rem;transition:all 0.2s;background:var(--bg3);}
+    .link-row:hover{border-color:var(--neon-g);color:var(--neon-g);}
+    .link-icon{font-size:1rem;width:1.2rem;text-align:center;flex-shrink:0;}
+    .card-interests{grid-column:1/7;grid-row:13/15;display:flex;flex-direction:column;}
+    .interest-pills{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.75rem;}
+    .interest-pill{display:flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;border-radius:30px;border:1px solid var(--border);background:var(--bg3);font-size:0.82rem;font-weight:500;transition:all 0.2s;}
+    .interest-pill:hover{border-color:var(--neon-p);color:var(--neon-p);transform:scale(1.03);}
+    .card-location{grid-column:7/13;grid-row:13/15;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(135deg,var(--bg2) 0%,#1a1028 100%);overflow:hidden;}
+    .location-big{font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;line-height:1;letter-spacing:-0.03em;}
+    .location-big .neon{color:var(--neon-p);}
+    .location-sub{font-family:var(--mono);font-size:0.7rem;color:var(--muted);margin-top:0.5rem;letter-spacing:0.1em;}
+    .location-deco{position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-size:8rem;opacity:0.04;pointer-events:none;user-select:none;}
+    footer{max-width:1200px;margin:0 auto;padding:1.5rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);font-family:var(--mono);font-size:0.65rem;color:var(--muted);}
+    .footer-live{display:flex;align-items:center;gap:0.5rem;}
+    .live-dot{width:6px;height:6px;border-radius:50%;background:var(--neon-g);box-shadow:0 0 6px var(--neon-g);animation:pulse 2s ease-in-out infinite;}
+    [data-i18n]{transition:opacity 0.18s;}
+    body.lang-switching [data-i18n]{opacity:0;}
+    @media(max-width:900px){
+      .bento{grid-template-columns:1fr 1fr;grid-auto-rows:auto;gap:10px;}
+      .card-hero,.card-status,.card-role,.card-about,.card-stack,.card-projects,.card-contact,.card-links,.card-interests,.card-location{grid-column:1/-1!important;grid-row:auto!important;}
+      .card-hero{min-height:300px;}
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; overflow-x: hidden; }
-    body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px); }
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: rgba(8,8,16,0.85); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-bottom: 1px solid var(--border); }
-    .nav-logo { font-family: var(--mono); font-size: 0.85rem; font-weight: 500; color: var(--neon-g); letter-spacing: 0.05em; }
-    .nav-logo em { color: var(--muted); font-style: normal; }
-    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
-    nav ul { display: flex; gap: 1.5rem; list-style: none; }
-    nav ul a { text-decoration: none; color: var(--muted); font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
-    nav ul a:hover { color: var(--neon-g); }
-    .lang-switcher { display: flex; gap: 2px; background: var(--bg3); border: 1px solid var(--border); border-radius: 5px; padding: 3px; }
-    .lang-btn { background: none; border: none; cursor: pointer; font-family: var(--mono); font-size: 0.65rem; color: var(--muted); padding: 4px 8px; border-radius: 3px; transition: all 0.15s; text-transform: uppercase; letter-spacing: 0.06em; }
-    .lang-btn:hover { color: var(--text); }
-    .lang-btn.active { background: var(--neon-g); color: #080810; font-weight: 600; }
-    main { max-width: 1200px; margin: 0 auto; padding: 5.5rem 1.5rem 2rem; }
-    .bento { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: 80px; gap: 12px; }
-    .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; overflow: hidden; position: relative; transition: border-color 0.25s, transform 0.25s; }
-    .card:hover { transform: translateY(-2px); }
-    .card::before { content: ''; position: absolute; inset: 0; border-radius: inherit; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
-    .card:hover::before { opacity: 1; }
-    .card-g::before  { box-shadow: inset 0 0 40px rgba(0,255,170,0.06); }
-    .card-p::before  { box-shadow: inset 0 0 40px rgba(191,95,255,0.08); }
-    .card-b::before  { box-shadow: inset 0 0 40px rgba(0,207,255,0.07); }
-    .card-y::before  { box-shadow: inset 0 0 40px rgba(255,221,0,0.07); }
-    .card-g:hover { border-color: rgba(0,255,170,0.3); }
-    .card-p:hover { border-color: rgba(191,95,255,0.3); }
-    .card-b:hover { border-color: rgba(0,207,255,0.3); }
-    .card-y:hover { border-color: rgba(255,221,0,0.3); }
-    .card-label { font-family: var(--mono); font-size: 0.65rem; color: var(--neon-b); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.75rem; }
-    .card-hero { grid-column: 1 / 8; grid-row: 1 / 5; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(135deg, #0e0e1a 60%, #141428); padding: 2rem; }
-    .hero-eyebrow { font-family: var(--mono); font-size: 0.7rem; color: var(--neon-g); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.6rem; }
-    .hero-eyebrow::before { content: ''; width: 1.5rem; height: 1px; background: var(--neon-g); }
-    .card-hero h1 { font-size: clamp(2.2rem, 4vw, 3.8rem); font-weight: 700; line-height: 1; letter-spacing: -0.03em; margin-bottom: 1rem; }
-    .card-hero h1 .name-ghost { display: block; -webkit-text-stroke: 1px rgba(255,255,255,0.55); color: transparent; }
-    .card-hero h1 .name-neon  { display: block; color: var(--neon-g); }
-    .card-hero p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; max-width: 400px; margin-bottom: 1.5rem; }
-    .card-hero p strong { color: var(--text); }
-    .hero-btns { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-    .hero-dots { position: absolute; top: 1.5rem; right: 1.5rem; display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; }
-    .hero-dots span { width: 4px; height: 4px; border-radius: 50%; background: var(--border); display: block; }
-    .hero-dots span.lit { background: var(--neon-g); box-shadow: 0 0 6px var(--neon-g); }
-    .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.2rem; border-radius: 6px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; }
-    .btn-neon  { background: var(--neon-g); color: #080810; font-weight: 600; }
-    .btn-neon:hover  { box-shadow: 0 0 20px rgba(0,255,170,0.5); transform: translateY(-1px); }
-    .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
-    .btn-ghost:hover { border-color: var(--neon-g); color: var(--neon-g); }
-    .card-status { grid-column: 8 / 13; grid-row: 1 / 3; display: flex; flex-direction: column; justify-content: center; gap: 1rem; }
-    .status-row { display: flex; align-items: center; gap: 0.75rem; }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; animation: pulse 2.5s ease-in-out infinite; }
-    .dot-green  { background: var(--neon-g); box-shadow: 0 0 8px var(--neon-g); }
-    .dot-purple { background: var(--neon-p); box-shadow: 0 0 8px var(--neon-p); animation-delay: 0.5s; }
-    .dot-blue   { background: var(--neon-b); box-shadow: 0 0 8px var(--neon-b); animation-delay: 1s; }
-    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
-    .status-text strong { display: block; font-size: 0.82rem; font-weight: 600; }
-    .status-text span   { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); }
-    .card-role { grid-column: 8 / 13; grid-row: 3 / 5; display: flex; flex-direction: column; justify-content: center; }
-    .card-role .role-label { font-family: var(--mono); font-size: 0.65rem; color: var(--neon-p); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem; }
-    .card-role .role-title { font-size: 1.3rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.4rem; white-space: pre-line; }
-    .card-role .role-sub   { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
-    .card-about { grid-column: 1 / 6; grid-row: 5 / 8; display: flex; flex-direction: column; justify-content: space-between; }
-    .card-about p { color: var(--muted); font-size: 0.88rem; line-height: 1.7; }
-    .card-about p strong { color: var(--text); }
-    .about-footer { display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
-    .about-chip { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.06em; padding: 0.25rem 0.7rem; border-radius: 20px; border: 1px solid var(--border); color: var(--muted); }
-    .card-stack { grid-column: 6 / 13; grid-row: 5 / 8; }
-    .tag-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
-    .tech-tag { font-family: var(--mono); font-size: 0.68rem; padding: 0.3rem 0.75rem; border-radius: 4px; border: 1px solid var(--border); color: var(--text); background: var(--bg3); cursor: default; transition: all 0.15s; letter-spacing: 0.03em; }
-    .tech-tag:hover { color: var(--neon-g); border-color: rgba(0,255,170,0.4); }
-    .tech-tag.hot { color: var(--neon-g); border-color: rgba(0,255,170,0.25); background: rgba(0,255,170,0.05); }
-    .tech-tag.med { color: var(--neon-p); border-color: rgba(191,95,255,0.25); background: rgba(191,95,255,0.05); }
-    .card-projects { grid-column: 1 / 9; grid-row: 8 / 13; display: flex; flex-direction: column; }
-    .project-list { display: flex; flex-direction: column; gap: 0; margin-top: 0.75rem; overflow-y: auto; flex: 1; scrollbar-width: thin; scrollbar-color: rgba(0,207,255,0.35) transparent; }
-    .project-list::-webkit-scrollbar { width: 4px; }
-    .project-list::-webkit-scrollbar-track { background: transparent; }
-    .project-list::-webkit-scrollbar-thumb { background: rgba(0,207,255,0.35); border-radius: 2px; }
-    .project-list::-webkit-scrollbar-thumb:hover { background: rgba(0,207,255,0.65); }
-    .project-row { display: flex; align-items: flex-start; gap: 1rem; padding: 0.85rem 0; border-bottom: 1px solid var(--border); cursor: default; transition: background 0.15s, padding-left 0.15s; border-radius: 4px; }
-    .project-row:last-child { border-bottom: none; }
-    .project-row:hover { background: rgba(255,255,255,0.02); padding-left: 0.5rem; }
-    .proj-num  { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); min-width: 2rem; padding-top: 2px; }
-    .proj-body { flex: 1; }
-    .proj-title { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.2rem; }
-    .proj-desc  { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
-    .proj-tags  { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-top: 0.4rem; }
-    .proj-tag   { font-family: var(--mono); font-size: 0.6rem; padding: 2px 6px; border-radius: 3px; background: rgba(0,207,255,0.08); color: var(--neon-b); border: 1px solid rgba(0,207,255,0.15); }
-    .card-contact { grid-column: 9 / 13; grid-row: 8 / 10; display: flex; flex-direction: column; justify-content: center; }
-    .card-contact h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
-    .card-contact p  { color: var(--muted); font-size: 0.8rem; line-height: 1.6; margin-bottom: 1rem; }
-    .card-links { grid-column: 9 / 13; grid-row: 10 / 13; display: flex; flex-direction: column; gap: 0.5rem; justify-content: center; }
-    .link-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0.75rem; border-radius: 8px; border: 1px solid var(--border); text-decoration: none; color: var(--text); font-family: var(--mono); font-size: 0.72rem; transition: all 0.2s; background: var(--bg3); }
-    .link-row:hover { border-color: var(--neon-g); color: var(--neon-g); }
-    .link-icon { font-size: 1rem; width: 1.2rem; text-align: center; flex-shrink: 0; }
-    .card-interests { grid-column: 1 / 7; grid-row: 13 / 15; display: flex; flex-direction: column; }
-    .interest-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
-    .interest-pill { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 30px; border: 1px solid var(--border); background: var(--bg3); font-size: 0.82rem; font-weight: 500; transition: all 0.2s; }
-    .interest-pill:hover { border-color: var(--neon-p); color: var(--neon-p); transform: scale(1.03); }
-    .card-location { grid-column: 7 / 13; grid-row: 13 / 15; display: flex; flex-direction: column; justify-content: center; background: linear-gradient(135deg, var(--bg2) 0%, #1a1028 100%); overflow: hidden; }
-    .location-big { font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 700; line-height: 1; letter-spacing: -0.03em; }
-    .location-big .neon { color: var(--neon-p); }
-    .location-sub { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); margin-top: 0.5rem; letter-spacing: 0.1em; }
-    .location-deco { position: absolute; right: -20px; top: 50%; transform: translateY(-50%); font-size: 8rem; opacity: 0.04; pointer-events: none; user-select: none; }
-    footer { max-width: 1200px; margin: 0 auto; padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 0.65rem; color: var(--muted); }
-    .footer-live { display: flex; align-items: center; gap: 0.5rem; }
-    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--neon-g); box-shadow: 0 0 6px var(--neon-g); animation: pulse 2s ease-in-out infinite; }
-    [data-i18n] { transition: opacity 0.18s; }
-    body.lang-switching [data-i18n] { opacity: 0; }
-    @media (max-width: 900px) {
-      .bento { grid-template-columns: 1fr 1fr; grid-auto-rows: auto; gap: 10px; }
-      .card-hero, .card-status, .card-role, .card-about, .card-stack,
-      .card-projects, .card-contact, .card-links, .card-interests, .card-location {
-        grid-column: 1 / -1 !important; grid-row: auto !important;
-      }
-      .card-hero { min-height: 300px; }
-    }
-    @media (max-width: 600px) {
-      nav { padding: 0.75rem 1rem; flex-wrap: wrap; gap: 0.5rem; }
-      main { padding: 5rem 1rem 1.5rem; }
-      nav ul { gap: 0.75rem; }
+    @media(max-width:600px){
+      nav{padding:0.75rem 1rem;flex-wrap:wrap;gap:0.5rem;}
+      main{padding:5rem 1rem 1.5rem;}
+      nav ul{gap:0.75rem;}
     }
   </style>
 </head>
 <body>
-
   <nav>
     <div class="nav-logo">ag<em>.</em>dev</div>
     <div class="nav-right">
       <ul>
-        <li><a href="#about"    data-i18n="nav.about"></a></li>
-        <li><a href="#stack"    data-i18n="nav.skills"></a></li>
+        <li><a href="#about" data-i18n="nav.about"></a></li>
+        <li><a href="#stack" data-i18n="nav.skills"></a></li>
         <li><a href="#projects" data-i18n="nav.projects"></a></li>
-        <li><a href="#contact"  data-i18n="nav.contact"></a></li>
+        <li><a href="#contact" data-i18n="nav.contact"></a></li>
       </ul>
       <div class="lang-switcher">
         <button class="lang-btn" onclick="setLang('ca')">CA</button>
@@ -163,11 +144,8 @@
       </div>
     </div>
   </nav>
-
   <main>
     <div class="bento">
-
-      <!-- HERO -->
       <div class="card card-hero card-g">
         <div class="hero-dots">
           <span class="lit"></span><span class="lit"></span><span></span><span></span><span></span>
@@ -179,300 +157,206 @@
         <div class="hero-eyebrow" data-i18n="hero.eyebrow"></div>
         <h1>
           <span>Albert</span>
-          <span class="name-ghost">González</span>
+          <span class="name-ghost">Gonzàlez</span>
           <span class="name-neon">Rossell</span>
         </h1>
         <p data-i18n="hero.desc"></p>
         <div class="hero-btns">
           <a href="#contact" class="btn btn-neon" data-i18n="hero.cta"></a>
-          <a href="https://github.com/albertgo" target="_blank" class="btn btn-ghost">⌥ GitHub</a>
+          <a href="https://github.com/albertgo" target="_blank" class="btn btn-ghost">&#8997; GitHub</a>
         </div>
       </div>
-
-      <!-- STATUS -->
       <div class="card card-status card-g" id="about">
-        <div class="status-row">
-          <span class="status-dot dot-green"></span>
-          <div class="status-text">
-            <strong>VERA</strong>
-            <span data-i18n="status.role"></span>
-          </div>
-        </div>
-        <div class="status-row">
-          <span class="status-dot dot-purple"></span>
-          <div class="status-text">
-            <strong>UOC</strong>
-            <span data-i18n="status.degree"></span>
-          </div>
-        </div>
-        <div class="status-row">
-          <span class="status-dot dot-blue"></span>
-          <div class="status-text">
-            <strong data-i18n="status.available"></strong>
-            <span data-i18n="status.open"></span>
-          </div>
-        </div>
+        <div class="status-row"><span class="status-dot dot-green"></span><div class="status-text"><strong>VERA</strong><span data-i18n="status.role"></span></div></div>
+        <div class="status-row"><span class="status-dot dot-purple"></span><div class="status-text"><strong>UOC</strong><span data-i18n="status.degree"></span></div></div>
+        <div class="status-row"><span class="status-dot dot-blue"></span><div class="status-text"><strong data-i18n="status.available"></strong><span data-i18n="status.open"></span></div></div>
       </div>
-
-      <!-- ROLE -->
       <div class="card card-role card-p">
         <div class="role-label" data-i18n="role.label"></div>
         <div class="role-title" data-i18n="role.title"></div>
-        <div class="role-sub">Laravel · Vue.js · PostgreSQL</div>
+        <div class="role-sub">Laravel &middot; Vue.js &middot; PostgreSQL</div>
       </div>
-
-      <!-- ABOUT -->
       <div class="card card-about card-b">
         <div>
           <div class="card-label" data-i18n="about.label"></div>
           <p data-i18n="about.text"></p>
         </div>
         <div class="about-footer">
-          <span class="about-chip">📍 Igualada</span>
+          <span class="about-chip">&#128205; Igualada</span>
           <span class="about-chip" data-i18n="about.chip.edu"></span>
           <span class="about-chip" data-i18n="about.chip.langs"></span>
         </div>
       </div>
-
-      <!-- STACK -->
       <div class="card card-stack card-g" id="stack">
         <div class="card-label" data-i18n="stack.label"></div>
         <div class="tag-cloud">
-          <span class="tech-tag hot">Laravel</span>
-          <span class="tech-tag hot">PHP 8</span>
-          <span class="tech-tag hot">Livewire</span>
-          <span class="tech-tag hot">MySQL</span>
-          <span class="tech-tag hot">PostgreSQL</span>
-          <span class="tech-tag med">Capacitor</span>
-          <span class="tech-tag med">Alpine.js</span>
-          <span class="tech-tag med">Redis</span>
-          <span class="tech-tag med">PostGIS</span>
-          <span class="tech-tag">Tailwind</span>
-          <span class="tech-tag">Docker</span>
-          <span class="tech-tag">Salesforce</span>
-          <span class="tech-tag">Git</span>
-          <span class="tech-tag">Linux</span>
-          <span class="tech-tag">State Machines</span>
-          <span class="tech-tag">DDD</span>
-          <span class="tech-tag">REST APIs</span>
+          <span class="tech-tag hot">Laravel</span><span class="tech-tag hot">PHP 8</span><span class="tech-tag hot">Livewire</span><span class="tech-tag hot">MySQL</span><span class="tech-tag hot">PostgreSQL</span>
+          <span class="tech-tag med">Capacitor</span><span class="tech-tag med">Alpine.js</span><span class="tech-tag med">Redis</span><span class="tech-tag med">PostGIS</span>
+          <span class="tech-tag">Tailwind</span><span class="tech-tag">Docker</span><span class="tech-tag">Salesforce</span><span class="tech-tag">Git</span><span class="tech-tag">Linux</span><span class="tech-tag">State Machines</span><span class="tech-tag">DDD</span><span class="tech-tag">REST APIs</span>
         </div>
       </div>
-
-      <!-- PROJECTS -->
       <div class="card card-projects card-b" id="projects">
         <div class="card-label" data-i18n="projects.label"></div>
         <div class="project-list">
-          <div class="project-row">
-            <div class="proj-num">01</div>
-            <div class="proj-body">
-              <div class="proj-title" data-i18n="proj.1.title"></div>
-              <div class="proj-desc"  data-i18n="proj.1.desc"></div>
-              <div class="proj-tags"><span class="proj-tag">Laravel</span><span class="proj-tag">Livewire</span><span class="proj-tag">PostgreSQL</span></div>
-            </div>
-          </div>
-          <div class="project-row">
-            <div class="proj-num">02</div>
-            <div class="proj-body">
-              <div class="proj-title" data-i18n="proj.2.title"></div>
-              <div class="proj-desc"  data-i18n="proj.2.desc"></div>
-              <div class="proj-tags"><span class="proj-tag">State Machine</span><span class="proj-tag">PostGIS</span><span class="proj-tag">ROI</span></div>
-            </div>
-          </div>
-          <div class="project-row">
-            <div class="proj-num">03</div>
-            <div class="proj-body">
-              <div class="proj-title" data-i18n="proj.3.title"></div>
-              <div class="proj-desc"  data-i18n="proj.3.desc"></div>
-              <div class="proj-tags"><span class="proj-tag">Digital Signature</span><span class="proj-tag">Automation</span><span class="proj-tag">Queues</span></div>
-            </div>
-          </div>
-          <div class="project-row">
-            <div class="proj-num">04</div>
-            <div class="proj-body">
-              <div class="proj-title" data-i18n="proj.4.title"></div>
-              <div class="proj-desc"  data-i18n="proj.4.desc"></div>
-              <div class="proj-tags"><span class="proj-tag">REST API</span><span class="proj-tag">Integration</span><span class="proj-tag">Third-party</span></div>
-            </div>
-          </div>
-          <div class="project-row">
-            <div class="proj-num">05</div>
-            <div class="proj-body">
-              <div class="proj-title" data-i18n="proj.5.title"></div>
-              <div class="proj-desc"  data-i18n="proj.5.desc"></div>
-              <div class="proj-tags"><span class="proj-tag">Instagram</span><span class="proj-tag">Català</span></div>
-            </div>
-          </div>
+          <div class="project-row"><div class="proj-num">01</div><div class="proj-body"><div class="proj-title" data-i18n="proj.1.title"></div><div class="proj-desc" data-i18n="proj.1.desc"></div><div class="proj-tags"><span class="proj-tag">Laravel</span><span class="proj-tag">Livewire</span><span class="proj-tag">PostgreSQL</span></div></div></div>
+          <div class="project-row"><div class="proj-num">02</div><div class="proj-body"><div class="proj-title" data-i18n="proj.2.title"></div><div class="proj-desc" data-i18n="proj.2.desc"></div><div class="proj-tags"><span class="proj-tag">State Machine</span><span class="proj-tag">PostGIS</span><span class="proj-tag">ROI</span></div></div></div>
+          <div class="project-row"><div class="proj-num">03</div><div class="proj-body"><div class="proj-title" data-i18n="proj.3.title"></div><div class="proj-desc" data-i18n="proj.3.desc"></div><div class="proj-tags"><span class="proj-tag">Digital Signature</span><span class="proj-tag">Automation</span><span class="proj-tag">Queues</span></div></div></div>
+          <div class="project-row"><div class="proj-num">04</div><div class="proj-body"><div class="proj-title" data-i18n="proj.4.title"></div><div class="proj-desc" data-i18n="proj.4.desc"></div><div class="proj-tags"><span class="proj-tag">REST API</span><span class="proj-tag">Integration</span><span class="proj-tag">Third-party</span></div></div></div>
+          <div class="project-row"><div class="proj-num">05</div><div class="proj-body"><div class="proj-title" data-i18n="proj.5.title"></div><div class="proj-desc" data-i18n="proj.5.desc"></div><div class="proj-tags"><span class="proj-tag">Instagram</span><span class="proj-tag">Catal&agrave;</span></div></div></div>
         </div>
       </div>
-
-      <!-- CONTACT -->
       <div class="card card-contact card-p" id="contact">
         <div class="card-label" data-i18n="contact.label"></div>
         <h3 data-i18n="contact.title"></h3>
-        <p  data-i18n="contact.desc"></p>
-        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
-          <a href="/cdn-cgi/l/email-protection#b9d8d5dbdccbcd97ded6d7c3d8d5dcc397cbd6cacadcd5d5f9ded4d8d0d597dad6d4" class="btn btn-neon" data-i18n="contact.cta"></a>
-        </div>
+        <p data-i18n="contact.desc"></p>
+        <a href="mailto:albert.gonzalez.rossell@gmail.com" class="btn btn-neon" data-i18n="contact.cta"></a>
       </div>
-
-      <!-- LINKS -->
       <div class="card card-links card-g">
-        <a href="/cdn-cgi/l/email-protection#ed8c818f889f99c38a8283978c818897c39f829e9e888181ad8a808c8481c38e8280" class="link-row">
-          <i class="fa-solid fa-envelope link-icon"></i> <span class="__cf_email__" data-cfemail="442528262136306a232b2a3e2528213e6a362b3737212828042329252d286a272b29">[email&#160;protected]</span>
-        </a>
-        <a href="https://github.com/albertgo" target="_blank" class="link-row">
-          <i class="fa-brands fa-github link-icon"></i> github.com/albertgo
-        </a>
-        <a href="https://www.instagram.com/juga_truites" target="_blank" class="link-row">
-          <i class="fa-brands fa-instagram link-icon"></i> @juga_truites
-        </a>
-        <a href="https://www.linkedin.com/in/albertgr" target="_blank" class="link-row">
-          <i class="fa-brands fa-linkedin link-icon"></i> linkedin · albertgr
-        </a>
+        <a href="mailto:albert.gonzalez.rossell@gmail.com" class="link-row"><i class="fa-solid fa-envelope link-icon"></i> albert.gonzalez.rossell@gmail.com</a>
+        <a href="https://github.com/albertgo" target="_blank" class="link-row"><i class="fa-brands fa-github link-icon"></i> github.com/albertgo</a>
+        <a href="https://www.instagram.com/juga_truites" target="_blank" class="link-row"><i class="fa-brands fa-instagram link-icon"></i> @juga_truites</a>
+        <a href="https://www.linkedin.com/in/albertgr" target="_blank" class="link-row"><i class="fa-brands fa-linkedin link-icon"></i> linkedin &middot; albertgr</a>
       </div>
-
-      <!-- INTERESTS -->
       <div class="card card-interests card-y">
         <div class="card-label" data-i18n="interests.label"></div>
         <div class="interest-pills">
-          <span class="interest-pill">🚴 <span data-i18n="int.cycling"></span></span>
-          <span class="interest-pill">🏋️ <span data-i18n="int.gym"></span></span>
-          <span class="interest-pill">🎲 <span data-i18n="int.boardgames"></span></span>
-          <span class="interest-pill">🖨️ <span data-i18n="int.printing"></span></span>
-          <span class="interest-pill">✈️ <span data-i18n="int.travel"></span></span>
-          <span class="interest-pill">🎵 <span data-i18n="int.music"></span></span>
+          <span class="interest-pill">&#128692; <span data-i18n="int.cycling"></span></span>
+          <span class="interest-pill">&#127947; <span data-i18n="int.gym"></span></span>
+          <span class="interest-pill">&#127922; <span data-i18n="int.boardgames"></span></span>
+          <span class="interest-pill">&#128424; <span data-i18n="int.printing"></span></span>
+          <span class="interest-pill">&#9992; <span data-i18n="int.travel"></span></span>
+          <span class="interest-pill">&#127925; <span data-i18n="int.music"></span></span>
         </div>
       </div>
-
-      <!-- LOCATION -->
       <div class="card card-location card-p">
-        <div class="location-deco">📍</div>
+        <div class="location-deco">&#128205;</div>
         <div class="location-big">Igualada<br><span class="neon">Catalunya</span></div>
         <div class="location-sub" data-i18n="loc.sub"></div>
       </div>
-
     </div>
   </main>
-
   <footer>
     <div class="footer-live"><span class="live-dot"></span><span data-i18n="footer.available"></span></div>
-    <span>Albert González Rossell © 2026</span>
+    <span>Albert Gonzàlez Rossell &copy; 2026</span>
   </footer>
-
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     const T = {
       ca: {
-        "nav.about":"Sobre mi","nav.skills":"Stack","nav.projects":"Projectes","nav.contact":"Contacte",
-        "hero.eyebrow":"Full Stack Developer · Igualada",
-        "hero.desc":"M'agrada fer les coses simples per dins i boniques per fora.",
-        "hero.cta":"→ Contacta'm",
-        "status.role":"Full Stack Developer",
-        "status.degree":"Grau en Enginyeria Informàtica (en curs)",
-        "status.available":"Disponible","status.open":"Obert a projectes",
-        "role.label":"Especialitat","role.title":"Backend & sistemes\ncrítics de producció",
-        "about.label":"Sobre mi",
-        "about.text":"Dissenyo i mantinc sistemes CRM crítics. M'apassiona l'arquitectura de software neta, les bones pràctiques i la integració amb APIs. A la UOC estudio Enginyeria Informàtica compaginant-ho amb la feina a temps complet.",
-        "about.chip.edu":"🎓 UOC","about.chip.langs":"🗣 CA · ES · EN",
-        "stack.label":"Stack tecnològic",
-        "projects.label":"Projectes",
-        "proj.1.title":"CRM Telecomunicacions & Energia",
-        "proj.1.desc":"Sistema de gestió integral per a clients i contractes de fibra, VoIP, mòbil i energia.",
-        "proj.2.tal, integracions externes i notificacions legals.",
-        "proj.4.title":"Integracions de tercers","proj.4.desc":"Integració de sistemes de tercers via API REST",
-        "proj.5.title":"juga_truites","proj.5.desc":"Compte d'Instagram sobre jocs de taula. Contingut en català per a la comunitat jugadora.",
-        "contact.label":"Contacte","contact.title":"Parlem.","contact.desc":"Obert a col·laboracions i consultes tècniques.","contact.cta":"→ Escriu-me",
-        "interests.label":"Fora del codi",
-        "int.cycling":"Ciclisme","int.gym":"Gimnàs","int.boardgames":"Jocs de taula","int.printing":"Impressió 3D","int.travel":"Viatges","int.music":"Música",
-        "loc.sub":"Spain · Europe","footer.available":"Disponible per a projectes"
+        "nav.about": "Sobre mi", "nav.skills": "Stack", "nav.projects": "Projectes", "nav.contact": "Contacte",
+        "hero.eyebrow": "Full Stack Developer &middot; Igualada",
+        "hero.desc": "M’agrada fer les coses simples per dins i boniques per fora.",
+        "hero.cta": "→ Contacta’m",
+        "status.role": "Full Stack Developer",
+        "status.degree": "Grau en Enginyeria Informàtica (en curs)",
+        "status.available": "Disponible", "status.open": "Obert a projectes",
+        "role.label": "Especialitat", "role.title": "Backend & sistemes\ncrítics de producció",
+        "about.label": "Sobre mi",
+        "about.text": "Dissenyo i mantinc sistemes CRM crítics. M’apassiona l’arquitectura de software neta, les bones pràctiques i la integració amb APIs. A la UOC estudio Enginyeria Informàtica compaginant-ho amb la feina a temps complet.",
+        "about.chip.edu": "&#127379; UOC", "about.chip.langs": "&#128483; CA &middot; ES &middot; EN",
+        "stack.label": "Stack tecnològic",
+        "projects.label": "Projectes",
+        "proj.1.title": "CRM Telecomunicacions & Energia",
+        "proj.1.desc": "Sistema de gestió integral per a clients i contractes de fibra, VoIP, mòbil i energia.",
+        "proj.2.title": "Gestió d’Obres de Xarxa",
+        "proj.2.desc": "Mòdul de planificació de desplegaments FTTH amb màquina d’estats i càlcul de ROI.",
+        "proj.3.title": "Automatització de Fluxos Financers",
+        "proj.3.desc": "Pipeline automatitzat amb signatura digital, integracions externes i notificacions legals.",
+        "proj.4.title": "Integracions de tercers", "proj.4.desc": "Integració de sistemes de tercers via API REST",
+        "proj.5.title": "juga_truites", "proj.5.desc": "Compte d’Instagram sobre jocs de taula. Contingut en català per a la comunitat jugadora.",
+        "contact.label": "Contacte", "contact.title": "Parlem.", "contact.desc": "Obert a col·laboracions i consultes tècniques.", "contact.cta": "→ Escriu-me",
+        "interests.label": "Fora del codi",
+        "int.cycling": "Ciclisme", "int.gym": "Gimnàs", "int.boardgames": "Jocs de taula",
+        "int.printing": "Impressió 3D", "int.travel": "Viatges", "int.music": "Música",
+        "loc.sub": "Spain &middot; Europe", "footer.available": "Disponible per a projectes"
       },
       es: {
-        "nav.about":"Sobre mí","nav.skills":"Stack","nav.projects":"Proyectos","nav.contact":"Contacto",
-        "hero.eyebrow":"Full Stack Developer · Igualada",
-        "hero.desc":"Me gusta hacer las cosas simples por dentro y bonitas por fuera.",
-        "hero.cta":"→ Contáctame",
-        "status.role":"Full Stack Developer",
-        "status.degree":"Grado en Ingeniería Informática (en curso)",
-        "status.available":"Disponible","status.open":"Abierto a proyectos",
-        "role.label":"Especialidad","role.title":"Backend & sistemas\ncríticos de producción",
-        "about.label":"Sobre mí",
-        "about.text":"Diseño y mantengo sistemas CRM propios para la gestión de servicios de telecomunicaciones y energía. Me apasiona la arquitectura de software limpia, las buenas prácticas y la integración con APIs. En la UOC estudio Ingeniería Informática compaginándolo con el trabajo a tiempo completo.",
-        "about.chip.edu":"🎓 UOC","about.chip.langs":"🗣 CA · ES · EN",
-        "stack.label":"Stack tecnológico",
-        "projects.label":"Proyectos",
-        "proj.1.title":"CRM Telecomunicaciones & Energía",
-        "proj.1.desc":"Sistema de gestión integral para clientes y contratos de fibra, VoIP, móvil y energía.",
-        "proj.2.title":"Gestión de Obras de Red",
-        "proj.2.desc":"Módulo de planificación de despliegues FTTH con máquina de estados y cálculo de ROI.",
-        "proj.3.title":"Automatización de Flujos Financieros",
-        "proj.3.desc":"Pipeline automatizado con firma digital, integraciones externas y notificaciones legales.",
-        "proj.4.title":"Integraciones de terceros","proj.4.desc":"Integración de sistemas de terceros via API REST",
-        "proj.5.title":"juga_truites","proj.5.desc":"Cuenta de Instagram sobre juegos de mesa. Contenido en catalán para la comunidad jugadora.",
-        "contact.label":"Contacto","contact.title":"Hablemos.","contact.desc":"Abierto a colaboraciones y consultas técnicas.","contact.cta":"→ Escríbeme",
-        "interests.label":"Fuera del código",
-        "int.cycling":"Ciclismo","int.gym":"Gimnasio","int.boardgames":"Juegos de mesa","int.printing":"Impresión 3D","int.travel":"Viajes","int.music":"Música",
-        "loc.sub":"Spain · Europe","footer.available":"Disponible para proyectos"
+        "nav.about": "Sobre mí", "nav.skills": "Stack", "nav.projects": "Proyectos", "nav.contact": "Contacto",
+        "hero.eyebrow": "Full Stack Developer &middot; Igualada",
+        "hero.desc": "Me gusta hacer las cosas simples por dentro y bonitas por fuera.",
+        "hero.cta": "→ Contáctame",
+        "status.role": "Full Stack Developer",
+        "status.degree": "Grado en Ingeniería Informática (en curso)",
+        "status.available": "Disponible", "status.open": "Abierto a proyectos",
+        "role.label": "Especialidad", "role.title": "Backend & sistemas\ncríticos de producción",
+        "about.label": "Sobre mí",
+        "about.text": "Diseño y mantengo sistemas CRM propios para la gestión de servicios de telecomunicaciones y energía. Me apasiona la arquitectura de software limpia, las buenas prácticas y la integración con APIs. En la UOC estudio Ingeniería Informática compagino con el trabajo a tiempo completo.",
+        "about.chip.edu": "&#127379; UOC", "about.chip.langs": "&#128483; CA &middot; ES &middot; EN",
+        "stack.label": "Stack tecnológico",
+        "projects.label": "Proyectos",
+        "proj.1.title": "CRM Telecomunicaciones & Energía",
+        "proj.1.desc": "Sistema de gestión integral para clientes y contratos de fibra, VoIP, móvil y energía.",
+        "proj.2.title": "Gestión de Obras de Red",
+        "proj.2.desc": "Módulo de planificación de despliegues FTTH con máquina de estados y cálculo de ROI.",
+        "proj.3.title": "Automatización de Flujos Financieros",
+        "proj.3.desc": "Pipeline automatizado con firma digital, integraciones externas y notificaciones legales.",
+        "proj.4.title": "Integraciones de terceros", "proj.4.desc": "Integración de sistemas de terceros via API REST",
+        "proj.5.title": "juga_truites", "proj.5.desc": "Cuenta de Instagram sobre juegos de mesa. Contenido en catalán para la comunidad jugadora.",
+        "contact.label": "Contacto", "contact.title": "Hablemos.", "contact.desc": "Abierto a colaboraciones y consultas técnicas.", "contact.cta": "→ Escríbeme",
+        "interests.label": "Fuera del código",
+        "int.cycling": "Ciclismo", "int.gym": "Gimnasio", "int.boardgames": "Juegos de mesa",
+        "int.printing": "Impresión 3D", "int.travel": "Viajes", "int.music": "Música",
+        "loc.sub": "Spain &middot; Europe", "footer.available": "Disponible para proyectos"
       },
       en: {
-        "nav.about":"About","nav.skills":"Stack","nav.projects":"Projects","nav.contact":"Contact",
-        "hero.eyebrow":"Full Stack Developer · Igualada",
-        "hero.desc":"I like to make things simple on the inside and beautiful on the outside.",
-        "hero.cta":"→ Get in touch",
-        "status.role":"Full Stack Developer",
-        "status.degree":"Computer Engineering (in progress)",
-        "status.available":"Available","status.open":"Open to projects",
-        "role.label":"Specialty","role.title":"Backend & production\ncritical systems",
-        "about.label":"About me",
-        "about.text":"I design and maintain proprietary CRM systems for managing telecommunications and energy services. I'm passionate about clean software architecture, best practices and integration with APIs. At UOC I study Computer Engineering alongside full-time work.",
-        "about.chip.edu":"🎓 UOC","about.chip.langs":"🗣 CA · ES · EN",
-        "stack.label":"Tech stack",
-        "projects.label":"Projects",
-        "proj.1.title":"Telecom & Energy CRM",
-        "proj.1.desc":"Comprehensive management system for fiber, VoIP, mobile and energy customers and contracts.",
-        "proj.2.title":"Network Infrastructure Management",
-        "proj.2.desc":"FTTH deployment planning module with state machine and ROI calculation.",
-        "proj.3.title":"Financial Flow Automation",
-        "proj.3.desc":"Automated pipeline with digital signature, external integrations and legal notifications.",
-        "proj.4.title":"Third-party Integrations","proj.4.desc":"Integration of third-party systems via REST API.",
-        "proj.5.title":"juga_truites","proj.5.desc":"Instagram account about board games. Content in Catalan for the gaming community.",
-        "contact.label":"Contact","contact.title":"Let's talk.","contact.desc":"Open to collaborations and technical consulting.","contact.cta":"→ Write to me",
-        "interests.label":"Outside of code",
-        "int.cycling":"Cycling","int.gym":"Gym","int.boardgames":"Board games","int.printing":"3D Printing","int.travel":"Travel","int.music":"Music",
-        "loc.sub":"Spain · Europe","footer.available":"Available for projects"
+        "nav.about": "About", "nav.skills": "Stack", "nav.projects": "Projects", "nav.contact": "Contact",
+        "hero.eyebrow": "Full Stack Developer &middot; Igualada",
+        "hero.desc": "I like to make things simple on the inside and beautiful on the outside.",
+        "hero.cta": "→ Get in touch",
+        "status.role": "Full Stack Developer",
+        "status.degree": "Computer Engineering (in progress)",
+        "status.available": "Available", "status.open": "Open to projects",
+        "role.label": "Specialty", "role.title": "Backend & production\ncritical systems",
+        "about.label": "About me",
+        "about.text": "I design and maintain proprietary CRM systems for managing telecommunications and energy services. I am passionate about clean software architecture, best practices and APIs. At UOC I study Computer Engineering alongside full-time work.",
+        "about.chip.edu": "&#127379; UOC", "about.chip.langs": "&#128483; CA &middot; ES &middot; EN",
+        "stack.label": "Tech stack",
+        "projects.label": "Projects",
+        "proj.1.title": "Telecom & Energy CRM",
+        "proj.1.desc": "Comprehensive management system for fiber, VoIP, mobile and energy customers and contracts.",
+        "proj.2.title": "Network Infrastructure Management",
+        "proj.2.desc": "FTTH deployment planning module with state machine and ROI calculation.",
+        "proj.3.title": "Financial Flow Automation",
+        "proj.3.desc": "Automated pipeline with digital signature, external integrations and legal notifications.",
+        "proj.4.title": "Third-party Integrations", "proj.4.desc": "Integration of third-party systems via REST API.",
+        "proj.5.title": "juga_truites", "proj.5.desc": "Instagram account about board games. Content in Catalan for the gaming community.",
+        "contact.label": "Contact", "contact.title": "Let’s talk.", "contact.desc": "Open to collaborations and technical consulting.", "contact.cta": "→ Write to me",
+        "interests.label": "Outside of code",
+        "int.cycling": "Cycling", "int.gym": "Gym", "int.boardgames": "Board games",
+        "int.printing": "3D Printing", "int.travel": "Travel", "int.music": "Music",
+        "loc.sub": "Spain &middot; Europe", "footer.available": "Available for projects"
       }
     };
 
-    let lang = localStorage.getItem('lang') || 'ca';
+    let lang = localStorage.getItem("lang") || "ca";
 
     function setLang(l) {
       if (l === lang) return;
-      document.body.classList.add('lang-switching');
-      setTimeout(() => {
+      document.body.classList.add("lang-switching");
+      setTimeout(function() {
         lang = l;
-        localStorage.setItem('lang', l);
+        localStorage.setItem("lang", l);
         apply();
         document.documentElement.lang = l;
-        document.body.classList.remove('lang-switching');
-        document.querySelectorAll('.lang-btn').forEach(b =>
-          b.classList.toggle('active', b.textContent.toLowerCase() === l)
-        );
+        document.body.classList.remove("lang-switching");
+        document.querySelectorAll(".lang-btn").forEach(function(b) {
+          b.classList.toggle("active", b.textContent.toLowerCase() === l);
+        });
       }, 180);
     }
 
     function apply() {
-      const t = T[lang];
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const k = el.getAttribute('data-i18n');
+      var t = T[lang];
+      document.querySelectorAll("[data-i18n]").forEach(function(el) {
+        var k = el.getAttribute("data-i18n");
         if (t[k] !== undefined) el.innerHTML = t[k];
       });
     }
 
-    // Inicialització
     apply();
     document.documentElement.lang = lang;
-    document.querySelectorAll('.lang-btn').forEach(b =>
-      b.classList.toggle('active', b.textContent.toLowerCase() === lang)
-    );
+    document.querySelectorAll(".lang-btn").forEach(function(b) {
+      b.classList.toggle("active", b.textContent.toLowerCase() === lang);
+    });
   </script>
-
 </body>
 </html>
