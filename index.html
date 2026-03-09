@@ -317,8 +317,8 @@
 
       <!-- LINKS -->
       <div class="card card-links card-g">
-        <a href="mailto:albert.gonzalez.rossell@gmail.com" class="link-row">
-          <i class="fa-solid fa-envelope link-icon"></i> albert.gonzalez.rossell@gmail.com
+        <a href="/cdn-cgi/l/email-protection#ed8c818f889f99c38a8283978c818897c39f829e9e888181ad8a808c8481c38e8280" class="link-row">
+          <i class="fa-solid fa-envelope link-icon"></i> <span class="__cf_email__" data-cfemail="442528262136306a232b2a3e2528213e6a362b3737212828042329252d286a272b29">[email&#160;protected]</span>
         </a>
         <a href="https://github.com/albertgo" target="_blank" class="link-row">
           <i class="fa-brands fa-github link-icon"></i> github.com/albertgo
@@ -359,7 +359,7 @@
     <span>Albert González Rossell © 2026</span>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     const T = {
       ca: {
         "nav.about":"Sobre mi","nav.skills":"Stack","nav.projects":"Projectes","nav.contact":"Contacte",
@@ -377,10 +377,7 @@
         "projects.label":"Projectes",
         "proj.1.title":"CRM Telecomunicacions & Energia",
         "proj.1.desc":"Sistema de gestió integral per a clients i contractes de fibra, VoIP, mòbil i energia.",
-        "proj.2.title":"Gestió d'Obres de Xarxa",
-        "proj.2.desc":"Mòdul de planificació de desplegaments FTTH amb màquina d'estats i càlcul de ROI.",
-        "proj.3.title":"Automatització de Fluxos Financers",
-        "proj.3.desc":"Pipeline automatitzat amb signatura digital, integracions externes i notificacions legals.",
+        "proj.2.tal, integracions externes i notificacions legals.",
         "proj.4.title":"Integracions de tercers","proj.4.desc":"Integració de sistemes de tercers via API REST",
         "proj.5.title":"juga_truites","proj.5.desc":"Compte d'Instagram sobre jocs de taula. Contingut en català per a la comunitat jugadora.",
         "contact.label":"Contacte","contact.title":"Parlem.","contact.desc":"Obert a col·laboracions i consultes tècniques.","contact.cta":"→ Escriu-me",
@@ -464,4 +461,18 @@
     function apply() {
       const t = T[lang];
       document.querySelectorAll('[data-i18n]').forEach(el => {
-        con
+        const k = el.getAttribute('data-i18n');
+        if (t[k] !== undefined) el.innerHTML = t[k];
+      });
+    }
+
+    // Inicialització
+    apply();
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b =>
+      b.classList.toggle('active', b.textContent.toLowerCase() === lang)
+    );
+  </script>
+
+</body>
+</html>
