@@ -6,6 +6,7 @@
   <title>Albert González Rossell — Full Stack Developer</title>
   <meta name="description" content="Full Stack Developer. Laravel, Vue.js, sistemes complexos." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -114,7 +115,7 @@
     .card-links { grid-column: 9 / 13; grid-row: 10 / 13; display: flex; flex-direction: column; gap: 0.5rem; justify-content: center; }
     .link-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0.75rem; border-radius: 8px; border: 1px solid var(--border); text-decoration: none; color: var(--text); font-family: var(--mono); font-size: 0.72rem; transition: all 0.2s; background: var(--bg3); }
     .link-row:hover { border-color: var(--neon-g); color: var(--neon-g); }
-    .link-icon { font-size: 0.9rem; width: 1.2rem; text-align: center; }
+    .link-icon { font-size: 1rem; width: 1.2rem; text-align: center; flex-shrink: 0; }
     .card-interests { grid-column: 1 / 7; grid-row: 13 / 15; display: flex; flex-direction: column; }
     .interest-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
     .interest-pill { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 30px; border: 1px solid var(--border); background: var(--bg3); font-size: 0.82rem; font-weight: 500; transition: all 0.2s; }
@@ -310,23 +311,23 @@
         <h3 data-i18n="contact.title"></h3>
         <p  data-i18n="contact.desc"></p>
         <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
-          <a href="mailto:albert.gonzalez.rossell@gmail.com" class="btn btn-neon" data-i18n="contact.cta"></a>
+          <a href="/cdn-cgi/l/email-protection#b9d8d5dbdccbcd97ded6d7c3d8d5dcc397cbd6cacadcd5d5f9ded4d8d0d597dad6d4" class="btn btn-neon" data-i18n="contact.cta"></a>
         </div>
       </div>
 
       <!-- LINKS -->
       <div class="card card-links card-g">
         <a href="mailto:albert.gonzalez.rossell@gmail.com" class="link-row">
-          <span class="link-icon">✉</span> albert.gonzalez.rossell@gmail.com
+          <i class="fa-solid fa-envelope link-icon"></i> albert.gonzalez.rossell@gmail.com
         </a>
         <a href="https://github.com/albertgo" target="_blank" class="link-row">
-          <span class="link-icon">⌥</span> github.com/albertgo
+          <i class="fa-brands fa-github link-icon"></i> github.com/albertgo
         </a>
         <a href="https://www.instagram.com/juga_truites" target="_blank" class="link-row">
-          <span class="link-icon">◈</span> @juga_truites
+          <i class="fa-brands fa-instagram link-icon"></i> @juga_truites
         </a>
-        <a href="https://www.linkedin.com/in/albertgonzalezrossell" target="_blank" class="link-row">
-          <span class="link-icon">in</span> Linkedin
+        <a href="https://www.linkedin.com/in/albertgr" target="_blank" class="link-row">
+          <i class="fa-brands fa-linkedin link-icon"></i> linkedin · albertgr
         </a>
       </div>
 
@@ -358,7 +359,7 @@
     <span>Albert González Rossell © 2026</span>
   </footer>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     const T = {
       ca: {
         "nav.about":"Sobre mi","nav.skills":"Stack","nav.projects":"Projectes","nav.contact":"Contacte",
@@ -463,17 +464,4 @@
     function apply() {
       const t = T[lang];
       document.querySelectorAll('[data-i18n]').forEach(el => {
-        const k = el.getAttribute('data-i18n');
-        if (t[k] !== undefined) el.innerHTML = t[k];
-      });
-    }
-
-    apply();
-    document.documentElement.lang = lang;
-    document.querySelectorAll('.lang-btn').forEach(b =>
-      b.classList.toggle('active', b.textContent.toLowerCase() === lang)
-    );
-  </script>
-
-</body>
-</html>
+        con
