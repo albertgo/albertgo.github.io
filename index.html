@@ -1,63 +1,518 @@
 <!DOCTYPE html>
-<html lang="en">
-<!--https://monicalent.com/-->
+<html lang="ca">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="css/index.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <title>Albert González Rossell</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Albert González Rossell — Full Stack Developer</title>
+  <meta name="description" content="Full Stack Developer. Laravel, Vue.js, sistemes complexos." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    /* ═══════════════════════════════════════════
+       VARIABLES & RESET
+    ═══════════════════════════════════════════ */
+    :root {
+      --bg:     #080810;
+      --bg2:    #0e0e1a;
+      --bg3:    #13131f;
+      --border: rgba(255,255,255,0.06);
+      --text:   #f0f0ff;
+      --muted:  #6060a0;
+      --neon-g: #00ffaa;
+      --neon-p: #bf5fff;
+      --neon-b: #00cfff;
+      --neon-y: #ffdd00;
+      --mono:   'JetBrains Mono', monospace;
+      --sans:   'Space Grotesk', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    /* scanline overlay */
+    body::after {
+      content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+      background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    }
+
+    /* ═══════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(8,8,16,0.85);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: var(--mono); font-size: 0.85rem; font-weight: 500; color: var(--neon-g); letter-spacing: 0.05em; }
+    .nav-logo em { color: var(--muted); font-style: normal; }
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    nav ul { display: flex; gap: 1.5rem; list-style: none; }
+    nav ul a { text-decoration: none; color: var(--muted); font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    nav ul a:hover { color: var(--neon-g); }
+
+    /* ═══════════════════════════════════════════
+       LANG SWITCHER
+    ═══════════════════════════════════════════ */
+    .lang-switcher { display: flex; gap: 2px; background: var(--bg3); border: 1px solid var(--border); border-radius: 5px; padding: 3px; }
+    .lang-btn { background: none; border: none; cursor: pointer; font-family: var(--mono); font-size: 0.65rem; color: var(--muted); padding: 4px 8px; border-radius: 3px; transition: all 0.15s; text-transform: uppercase; letter-spacing: 0.06em; }
+    .lang-btn:hover { color: var(--text); }
+    .lang-btn.active { background: var(--neon-g); color: #080810; font-weight: 600; }
+
+    /* ═══════════════════════════════════════════
+       MAIN & BENTO GRID
+    ═══════════════════════════════════════════ */
+    main { max-width: 1200px; margin: 0 auto; padding: 5.5rem 1.5rem 2rem; }
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: 80px;
+      gap: 12px;
+    }
+
+    /* ═══════════════════════════════════════════
+       CARD BASE
+    ═══════════════════════════════════════════ */
+    .card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.5rem;
+      overflow: hidden; position: relative;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .card:hover { transform: translateY(-2px); }
+    .card::before { content: ''; position: absolute; inset: 0; border-radius: inherit; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .card:hover::before { opacity: 1; }
+    .card-g::before  { box-shadow: inset 0 0 40px rgba(0,255,170,0.06); }
+    .card-p::before  { box-shadow: inset 0 0 40px rgba(191,95,255,0.08); }
+    .card-b::before  { box-shadow: inset 0 0 40px rgba(0,207,255,0.07); }
+    .card-y::before  { box-shadow: inset 0 0 40px rgba(255,221,0,0.07); }
+    .card-g:hover { border-color: rgba(0,255,170,0.3); }
+    .card-p:hover { border-color: rgba(191,95,255,0.3); }
+    .card-b:hover { border-color: rgba(0,207,255,0.3); }
+    .card-y:hover { border-color: rgba(255,221,0,0.3); }
+
+    /* shared label */
+    .card-label { font-family: var(--mono); font-size: 0.65rem; color: var(--neon-b); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.75rem; }
+
+    /* ═══════════════════════════════════════════
+       HERO CARD
+    ═══════════════════════════════════════════ */
+    .card-hero {
+      grid-column: 1 / 8; grid-row: 1 / 5;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      background: linear-gradient(135deg, #0e0e1a 60%, #141428);
+      padding: 2rem;
+    }
+    .hero-eyebrow { font-family: var(--mono); font-size: 0.7rem; color: var(--neon-g); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.6rem; }
+    .hero-eyebrow::before { content: ''; width: 1.5rem; height: 1px; background: var(--neon-g); }
+    .card-hero h1 { font-size: clamp(2.2rem, 4vw, 3.8rem); font-weight: 700; line-height: 1; letter-spacing: -0.03em; margin-bottom: 1rem; }
+    .card-hero h1 .name-ghost { display: block; -webkit-text-stroke: 1px rgba(255,255,255,0.55); color: transparent; }
+    .card-hero h1 .name-neon  { display: block; color: var(--neon-g); }
+    .card-hero p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; max-width: 400px; margin-bottom: 1.5rem; }
+    .card-hero p strong { color: var(--text); }
+    .hero-btns { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    /* decoration dots */
+    .hero-dots { position: absolute; top: 1.5rem; right: 1.5rem; display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; }
+    .hero-dots span { width: 4px; height: 4px; border-radius: 50%; background: var(--border); display: block; }
+    .hero-dots span.lit { background: var(--neon-g); box-shadow: 0 0 6px var(--neon-g); }
+
+    /* ═══════════════════════════════════════════
+       BUTTONS
+    ═══════════════════════════════════════════ */
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.2rem; border-radius: 6px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; }
+    .btn-neon  { background: var(--neon-g); color: #080810; font-weight: 600; }
+    .btn-neon:hover  { box-shadow: 0 0 20px rgba(0,255,170,0.5); transform: translateY(-1px); }
+    .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn-ghost:hover { border-color: var(--neon-g); color: var(--neon-g); }
+
+    /* ═══════════════════════════════════════════
+       STATUS CARD
+    ═══════════════════════════════════════════ */
+    .card-status { grid-column: 8 / 13; grid-row: 1 / 3; display: flex; flex-direction: column; justify-content: center; gap: 1rem; }
+    .status-row { display: flex; align-items: center; gap: 0.75rem; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; animation: pulse 2.5s ease-in-out infinite; }
+    .dot-green  { background: var(--neon-g); box-shadow: 0 0 8px var(--neon-g); }
+    .dot-purple { background: var(--neon-p); box-shadow: 0 0 8px var(--neon-p); animation-delay: 0.5s; }
+    .dot-blue   { background: var(--neon-b); box-shadow: 0 0 8px var(--neon-b); animation-delay: 1s; }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+    .status-text strong { display: block; font-size: 0.82rem; font-weight: 600; }
+    .status-text span   { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); }
+
+    /* ═══════════════════════════════════════════
+       ROLE CARD
+    ═══════════════════════════════════════════ */
+    .card-role { grid-column: 8 / 13; grid-row: 3 / 5; display: flex; flex-direction: column; justify-content: center; }
+    .card-role .role-label { font-family: var(--mono); font-size: 0.65rem; color: var(--neon-p); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .card-role .role-title { font-size: 1.3rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.4rem; white-space: pre-line; }
+    .card-role .role-sub   { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+
+    /* ═══════════════════════════════════════════
+       ABOUT CARD
+    ═══════════════════════════════════════════ */
+    .card-about { grid-column: 1 / 6; grid-row: 5 / 8; display: flex; flex-direction: column; justify-content: space-between; }
+    .card-about p { color: var(--muted); font-size: 0.88rem; line-height: 1.7; }
+    .card-about p strong { color: var(--text); }
+    .about-footer { display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
+    .about-chip { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.06em; padding: 0.25rem 0.7rem; border-radius: 20px; border: 1px solid var(--border); color: var(--muted); }
+
+    /* ═══════════════════════════════════════════
+       STACK CARD
+    ═══════════════════════════════════════════ */
+    .card-stack { grid-column: 6 / 13; grid-row: 5 / 8; }
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+    .tech-tag { font-family: var(--mono); font-size: 0.68rem; padding: 0.3rem 0.75rem; border-radius: 4px; border: 1px solid var(--border); color: var(--text); background: var(--bg3); cursor: default; transition: all 0.15s; letter-spacing: 0.03em; }
+    .tech-tag:hover { color: var(--neon-g); border-color: rgba(0,255,170,0.4); }
+    .tech-tag.hot { color: var(--neon-g); border-color: rgba(0,255,170,0.25); background: rgba(0,255,170,0.05); }
+    .tech-tag.med { color: var(--neon-p); border-color: rgba(191,95,255,0.25); background: rgba(191,95,255,0.05); }
+
+    /* ═══════════════════════════════════════════
+       PROJECTS CARD
+    ═══════════════════════════════════════════ */
+    .card-projects { grid-column: 1 / 9; grid-row: 8 / 13; display: flex; flex-direction: column; }
+    .project-list {
+      display: flex; flex-direction: column; gap: 0; margin-top: 0.75rem;
+      overflow-y: auto; flex: 1;
+      scrollbar-width: thin; scrollbar-color: rgba(0,207,255,0.35) transparent;
+    }
+    .project-list::-webkit-scrollbar { width: 4px; }
+    .project-list::-webkit-scrollbar-track { background: transparent; }
+    .project-list::-webkit-scrollbar-thumb { background: rgba(0,207,255,0.35); border-radius: 2px; }
+    .project-list::-webkit-scrollbar-thumb:hover { background: rgba(0,207,255,0.65); }
+    .project-row { display: flex; align-items: flex-start; gap: 1rem; padding: 0.85rem 0; border-bottom: 1px solid var(--border); cursor: default; transition: background 0.15s, padding-left 0.15s; border-radius: 4px; }
+    .project-row:last-child { border-bottom: none; }
+    .project-row:hover { background: rgba(255,255,255,0.02); padding-left: 0.5rem; }
+    .proj-num  { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); min-width: 2rem; padding-top: 2px; }
+    .proj-body { flex: 1; }
+    .proj-title { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .proj-desc  { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+    .proj-tags  { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-top: 0.4rem; }
+    .proj-tag   { font-family: var(--mono); font-size: 0.6rem; padding: 2px 6px; border-radius: 3px; background: rgba(0,207,255,0.08); color: var(--neon-b); border: 1px solid rgba(0,207,255,0.15); }
+
+    /* ═══════════════════════════════════════════
+       CONTACT CARD
+    ═══════════════════════════════════════════ */
+    .card-contact { grid-column: 9 / 13; grid-row: 8 / 10; display: flex; flex-direction: column; justify-content: center; }
+    .card-contact h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .card-contact p  { color: var(--muted); font-size: 0.8rem; line-height: 1.6; margin-bottom: 1rem; }
+
+    /* ═══════════════════════════════════════════
+       LINKS CARD
+    ═══════════════════════════════════════════ */
+    .card-links { grid-column: 9 / 13; grid-row: 10 / 13; display: flex; flex-direction: column; gap: 0.5rem; justify-content: center; }
+    .link-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0.75rem; border-radius: 8px; border: 1px solid var(--border); text-decoration: none; color: var(--text); font-family: var(--mono); font-size: 0.72rem; transition: all 0.2s; background: var(--bg3); }
+    .link-row:hover { border-color: var(--neon-g); color: var(--neon-g); }
+    .link-icon { font-size: 0.9rem; width: 1.2rem; text-align: center; }
+
+    /* ═══════════════════════════════════════════
+       INTERESTS CARD
+    ═══════════════════════════════════════════ */
+    .card-interests { grid-column: 1 / 7; grid-row: 13 / 15; display: flex; flex-direction: column; }
+    .interest-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+    .interest-pill { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 30px; border: 1px solid var(--border); background: var(--bg3); font-size: 0.82rem; font-weight: 500; transition: all 0.2s; }
+    .interest-pill:hover { border-color: var(--neon-p); color: var(--neon-p); transform: scale(1.03); }
+
+    /* ═══════════════════════════════════════════
+       LOCATION CARD
+    ═══════════════════════════════════════════ */
+    .card-location { grid-column: 7 / 13; grid-row: 13 / 15; display: flex; flex-direction: column; justify-content: center; background: linear-gradient(135deg, var(--bg2) 0%, #1a1028 100%); overflow: hidden; }
+    .location-big { font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 700; line-height: 1; letter-spacing: -0.03em; }
+    .location-big .neon { color: var(--neon-p); }
+    .location-sub { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); margin-top: 0.5rem; letter-spacing: 0.1em; }
+    .location-deco { position: absolute; right: -20px; top: 50%; transform: translateY(-50%); font-size: 8rem; opacity: 0.04; pointer-events: none; user-select: none; }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    footer { max-width: 1200px; margin: 0 auto; padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 0.65rem; color: var(--muted); }
+    .footer-live { display: flex; align-items: center; gap: 0.5rem; }
+    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--neon-g); box-shadow: 0 0 6px var(--neon-g); animation: pulse 2s ease-in-out infinite; }
+
+    /* ═══════════════════════════════════════════
+       LANG TRANSITION
+    ═══════════════════════════════════════════ */
+    [data-i18n] { transition: opacity 0.18s; }
+    body.lang-switching [data-i18n] { opacity: 0; }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .bento { grid-template-columns: 1fr 1fr; grid-auto-rows: auto; gap: 10px; }
+      .card-hero, .card-status, .card-role, .card-about, .card-stack,
+      .card-projects, .card-contact, .card-links, .card-interests, .card-location {
+        grid-column: 1 / -1 !important; grid-row: auto !important;
+      }
+      .card-hero { min-height: 300px; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 0.75rem 1rem; flex-wrap: wrap; gap: 0.5rem; }
+      main { padding: 5rem 1rem 1.5rem; }
+      nav ul { gap: 0.75rem; }
+    }
+  </style>
 </head>
 <body>
-    <section id="header">
-      <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg navbar-dark">
-            <div class="container-fluid">
-              <a class="navbar-brand" href="https://albertgo.github.io">Albert González Rossell</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                  <a class="nav-link active" aria-current="page" href="#">About</a>
-                  <a class="nav-link" href="mailto:albert.gonzalez.rossell@gmail.com">Contact</a>
-                </div>
-              </div>
-            </div>
-        </nav>
 
+  <!-- ═══════════════════════════════════════
+       NAV
+  ═══════════════════════════════════════ -->
+  <nav>
+    <div class="nav-logo">ag<em>.</em>dev</div>
+    <div class="nav-right">
+      <ul>
+        <li><a href="#about"    data-i18n="nav.about"></a></li>
+        <li><a href="#stack"    data-i18n="nav.skills"></a></li>
+        <li><a href="#projects" data-i18n="nav.projects"></a></li>
+        <li><a href="#contact"  data-i18n="nav.contact"></a></li>
+      </ul>
+      <div class="lang-switcher">
+        <button class="lang-btn" onclick="setLang('ca')">CA</button>
+        <button class="lang-btn" onclick="setLang('es')">ES</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
       </div>
-      
-    </section>
-    <section id="main-content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-6 col-md-12 d-flex flex-column ">
-              <img class="align-self-center" src="img_avatar.jpeg" style="border-radius: 50%; height: auto; width: 20%"/>
-              <h1 class="align-self-center " style="margin-top: 25px;">Hi, I'm Albert</h1>
-              <h3 class="align-self-center">I'm a full-stack web developer</h3>
-          </div>
-          <!--  <div class="col-xs-6 col-md-6 d-flex ">
-              <p class="align-self-center">Lorem ipsum dolor sit amet consectetur adipiscing elit ultrices tincidunt nam porta nisi et, pellentesque magna natoque nec faucibus arcu massa dignissim vestibulum conubia quisque. Tellus mattis lacus in consequat senectus parturient feugiat class primis vel est, diam eget mus habitant ornare gravida pharetra varius nunc ultrices. Ligula porttitor dui sapien blandit ultrices ridiculus mus egestas phasellus, placerat conubia nullam viverra luctus facilisi velit parturient, felis quam gravida aptent magnis suspendisse tellus leo.
+    </div>
+  </nav>
 
-            Curae curabitur ultrices tincidunt libero fames at tellus augue aliquet magnis euismod ut placerat ullamcorper, justo sapien faucibus volutpat pretium cubilia tempus nibh vehicula class viverra interdum. Nam curabitur convallis semper magnis est litora diam dapibus suscipit, curae nullam suspendisse nulla enim luctus fusce duis, neque fermentum et non aptent dis ridiculus lacinia. Nisl duis metus aenean dui vestibulum facilisi convallis sociis magna congue, lectus erat habitasse rhoncus praesent malesuada ligula morbi sapien.</p></div>
-        </div>-->
-      </div>
-    </section>
-    <section id="footer">
-      <div id="contact" class="container-fluid">
-        <div class="row">
-          <div class="col-xs-12 d-flex justify-content-center">
-            <a class="bi bi-twitter social-twitter" target="_blank" href="https://www.twitter.com/sundark00"></a>
-            <a class="bi bi-instagram social-instagram" target="_blank" href="https://www.instagram.com/sundark00"></a>
-            <a class="bi bi-linkedin social-linkedin" target="_blank" href="https://www.linkedin.com/in/albertgonzalezrossell/"></a>
-          </div>
-          
+  <!-- ═══════════════════════════════════════
+       BENTO GRID
+  ═══════════════════════════════════════ -->
+  <main>
+    <div class="bento">
+
+      <!-- HERO -->
+      <div class="card card-hero card-g">
+        <div class="hero-dots">
+          <span class="lit"></span><span class="lit"></span><span></span><span></span><span></span>
+          <span></span><span class="lit"></span><span></span><span class="lit"></span><span></span>
+          <span></span><span></span><span></span><span></span><span class="lit"></span>
+          <span class="lit"></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span class="lit"></span><span></span><span></span>
+        </div>
+        <div class="hero-eyebrow" data-i18n="hero.eyebrow"></div>
+        <h1>
+          <span>Albert</span>
+          <span class="name-ghost">González</span>
+          <span class="name-neon">Rossell</span>
+        </h1>
+        <p data-i18n="hero.desc"></p>
+        <div class="hero-btns">
+          <a href="#contact" class="btn btn-neon"  data-i18n="hero.cta"></a>
+          <a href="https://github.com/albertgo" target="_blank" class="btn btn-ghost">⌥ GitHub</a>
         </div>
       </div>
-    </section>
-    </body>
-</html>
+
+      <!-- STATUS -->
+      <div class="card card-status card-g" id="about">
+        <div class="status-row">
+          <span class="status-dot dot-green"></span>
+          <div class="status-text">
+            <strong>GURBTEC / IGUANA TELECOM</strong>
+            <span data-i18n="status.role"></span>
+          </div>
+        </div>
+        <div class="status-row">
+          <span class="status-dot dot-purple"></span>
+          <div class="status-text">
+            <strong>UOC</strong>
+            <span data-i18n="status.degree"></span>
+          </div>
+        </div>
+        <div class="status-row">
+          <span class="status-dot dot-blue"></span>
+          <div class="status-text">
+            <strong data-i18n="status.available"></strong>
+            <span data-i18n="status.open"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROLE -->
+      <div class="card card-role card-p">
+        <div class="role-label" data-i18n="role.label"></div>
+        <div class="role-title" data-i18n="role.title"></div>
+        <div class="role-sub">Laravel · Vue.js · PostgreSQL</div>
+      </div>
+
+      <!-- ABOUT -->
+      <div class="card card-about card-b">
+        <div>
+          <div class="card-label" data-i18n="about.label"></div>
+          <p data-i18n="about.text"></p>
+        </div>
+        <div class="about-footer">
+          <span class="about-chip">📍 Igualada</span>
+          <span class="about-chip" data-i18n="about.chip.edu"></span>
+          <span class="about-chip" data-i18n="about.chip.langs"></span>
+        </div>
+      </div>
+
+      <!-- STACK -->
+      <div class="card card-stack card-g" id="stack">
+        <div class="card-label" data-i18n="stack.label"></div>
+        <div class="tag-cloud">
+          <span class="tech-tag hot">Laravel</span>
+          <span class="tech-tag hot">PHP 8</span>
+          <span class="tech-tag hot">Livewire</span>
+          <span class="tech-tag hot">MySQL</span>
+          <span class="tech-tag hot">PostgreSQL</span>
+          <span class="tech-tag med">Capacitor</span>
+          <span class="tech-tag med">Alpine.js</span>
+          <span class="tech-tag med">Redis</span>
+          <span class="tech-tag med">PostGIS</span>
+          <span class="tech-tag">Tailwind</span>
+          <span class="tech-tag">Docker</span>
+          <span class="tech-tag">Salesforce</span>
+          <span class="tech-tag">Git</span>
+          <span class="tech-tag">Linux</span>
+          <span class="tech-tag">State Machines</span>
+          <span class="tech-tag">DDD</span>
+          <span class="tech-tag">REST APIs</span>
+        </div>
+      </div>
+
+      <!-- PROJECTS -->
+      <div class="card card-projects card-b" id="projects">
+        <div class="card-label" data-i18n="projects.label"></div>
+        <div class="project-list">
+
+          <div class="project-row">
+            <div class="proj-num">01</div>
+            <div class="proj-body">
+              <div class="proj-title" data-i18n="proj.1.title"></div>
+              <div class="proj-desc"  data-i18n="proj.1.desc"></div>
+              <div class="proj-tags"><span class="proj-tag">Laravel</span><span class="proj-tag">Livewire</span><span class="proj-tag">PostgreSQL</span></div>
+            </div>
+          </div>
+
+          <div class="project-row">
+            <div class="proj-num">02</div>
+            <div class="proj-body">
+              <div class="proj-title" data-i18n="proj.2.title"></div>
+              <div class="proj-desc"  data-i18n="proj.2.desc"></div>
+              <div class="proj-tags"><span class="proj-tag">State Machine</span><span class="proj-tag">PostGIS</span><span class="proj-tag">ROI</span></div>
+            </div>
+          </div>
+
+          <div class="project-row">
+            <div class="proj-num">03</div>
+            <div class="proj-body">
+              <div class="proj-title" data-i18n="proj.3.title"></div>
+              <div class="proj-desc"  data-i18n="proj.3.desc"></div>
+              <div class="proj-tags"><span class="proj-tag">Digital Signature</span><span class="proj-tag">Automation</span><span class="proj-tag">Queues</span></div>
+            </div>
+          </div>
+
+          <div class="project-row">
+            <div class="proj-num">04</div>
+            <div class="proj-body">
+              <div class="proj-title" data-i18n="proj.4.title"></div>
+              <div class="proj-desc"  data-i18n="proj.4.desc"></div>
+              <div class="proj-tags"><span class="proj-tag">REST API</span><span class="proj-tag">Integration</span><span class="proj-tag">Third-party</span></div>
+            </div>
+          </div>
+
+          <div class="project-row">
+            <div class="proj-num">05</div>
+            <div class="proj-body">
+              <div class="proj-title" data-i18n="proj.5.title"></div>
+              <div class="proj-desc"  data-i18n="proj.5.desc"></div>
+              <div class="proj-tags"><span class="proj-tag">Instagram</span><span class="proj-tag">Català</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="card card-contact card-p" id="contact">
+        <div class="card-label" data-i18n="contact.label"></div>
+        <h3 data-i18n="contact.title"></h3>
+        <p  data-i18n="contact.desc"></p>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
+          <a href="mailto:albert.gonzalez.rossell@gmail.com" class="btn btn-neon" data-i18n="contact.cta"></a>
+        </div>
+      </div>
+
+      <!-- LINKS -->
+      <div class="card card-links card-g">
+        <a href="/cdn-cgi/l/email-protection#fb9a97999e898fd59c9495819a979e81d5899488889e9797bb9c969a9297d5989496" class="link-row">
+          <span class="link-icon">✉</span> <span class="__cf_email__" data-cfemail="d2b3beb0b7a0a6fcb5bdbca8b3beb7a8fca0bda1a1b7bebe92b5bfb3bbbefcb1bdbf">[email&#160;protected]</span>
+        </a>
+        <a href="https://github.com/albertgo" target="_blank" class="link-row">
+          <span class="link-icon">⌥</span> github.com/albertgo
+        </a>
+        <a href="https://www.instagram.com/juga_truites" target="_blank" class="link-row">
+          <span class="link-icon">◈</span> @juga_truites
+        </a>
+        <a href="https://www.linkedin.com/in/albertgr" target="_blank" class="link-row">
+          <span class="link-icon">in</span> linkedin · albertgr
+        </a>
+      </div>
+
+      <!-- INTERESTS -->
+      <div class="card card-interests card-y">
+        <div class="card-label" data-i18n="interests.label"></div>
+        <div class="interest-pills">
+          <span class="interest-pill">🚴 <span data-i18n="int.cycling"></span></span>
+          <span class="interest-pill">🏋️ <span data-i18n="int.gym"></span></span>
+          <span class="interest-pill">🎲 <span data-i18n="int.boardgames"></span></span>
+          <span class="interest-pill">🖨️ <span data-i18n="int.printing"></span></span>
+          <span class="interest-pill">✈️ <span data-i18n="int.travel"></span></span>
+          <span class="interest-pill">🎵 <span data-i18n="int.music"></span></span>
+        </div>
+      </div>
+
+      <!-- LOCATION -->
+      <div class="card card-location card-p">
+        <div class="location-deco">📍</div>
+        <div class="location-big">Igualada<br><span class="neon">Catalunya</span></div>
+        <div class="location-sub" data-i18n="loc.sub"></div>
+      </div>
+
+    </div><!-- /bento -->
+  </main>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <footer>
+    <div class="footer-live"><span class="live-dot"></span><span data-i18n="footer.available"></span></div>
+    <span>Albert González Rossell © 2026</span>
+  </footer>
+
+  <!-- ═══════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════ -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="translations.js"></script>
+  <script>
+    let lang = localStorage.getItem('lang') || 'ca';
+
+    function setLang(l) {
+      if (l === lang) return;
+      document.body.classList.add('lang-switching');
+      setTimeout(() => {
+        lang = l;
+        localStorage.setItem('lang', l);
+        apply();
+        document.documentElement.lang = l;
+        document.body.classList.remove('lang-switching');
+        document.querySelectorAll('.lang-btn').forEach(b =>
+          b.classList.toggle('active', b.textContent.toLowerCase() === l)
+        );
+      }, 180);
+    }
+
+    function apply() {
+      const t = T[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        el.textContent = t[k] || k;
+      });
+    }
