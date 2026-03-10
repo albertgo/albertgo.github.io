@@ -36,7 +36,7 @@
     .nav-divider{width:1px;height:18px;background:var(--border);}
 
     main{max-width:1200px;margin:0 auto;padding:5.5rem 1.5rem 2rem;}
-    .bento{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:minmax(80px, auto);gap:12px;}
+    .bento{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:minmax(80px,auto);gap:12px;}
     .card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:1.5rem;overflow:hidden;position:relative;transition:border-color 0.25s,transform 0.25s;}
     .card:hover{transform:translateY(-2px);}
     .card::before{content:"";position:absolute;inset:0;border-radius:inherit;opacity:0;transition:opacity 0.3s;pointer-events:none;}
@@ -60,7 +60,15 @@
     .hero-btns{display:flex;gap:0.6rem;flex-wrap:wrap;}
     .hero-dots{position:absolute;top:1.5rem;right:1.5rem;display:grid;grid-template-columns:repeat(5,1fr);gap:6px;}
     .hero-dots span{width:4px;height:4px;border-radius:50%;background:var(--border);display:block;}
-    .hero-dots span.lit{background:var(--neon-g);box-shadow:0 0 6px var(--neon-g);}
+    .hero-dots span.lit{background:var(--neon-g);box-shadow:0 0 6px var(--neon-g);animation:dotPulse 3s ease-in-out infinite;}
+    .hero-dots span.lit:nth-child(1){animation-delay:0.0s;}
+    .hero-dots span.lit:nth-child(2){animation-delay:0.3s;}
+    .hero-dots span.lit:nth-child(7){animation-delay:0.6s;}
+    .hero-dots span.lit:nth-child(9){animation-delay:0.9s;}
+    .hero-dots span.lit:nth-child(15){animation-delay:1.2s;}
+    .hero-dots span.lit:nth-child(16){animation-delay:1.5s;}
+    .hero-dots span.lit:nth-child(23){animation-delay:1.8s;}
+    @keyframes dotPulse{0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 6px var(--neon-g);}50%{opacity:0.2;transform:scale(0.5);box-shadow:none;}}
     .btn{display:inline-flex;align-items:center;gap:0.4rem;padding:0.6rem 1.2rem;border-radius:6px;font-family:var(--mono);font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all 0.2s;}
     .btn-neon{background:var(--neon-g);color:#080810;font-weight:600;}
     .btn-neon:hover{box-shadow:0 0 20px rgba(0,255,170,0.5);transform:translateY(-1px);}
@@ -230,10 +238,10 @@
         <div class="card-label" data-i18n="contact.label"></div>
         <h3 data-i18n="contact.title"></h3>
         <p data-i18n="contact.desc"></p>
-        <a href="mailto:albert.gonzalez.rossell@gmail.com" class="btn btn-neon" data-i18n="contact.cta"></a>
+        <a href="/cdn-cgi/l/email-protection#f1909d93948385df969e9f8b909d948bdf839e8282949d9db1969c90989ddf929e9c" class="btn btn-neon" data-i18n="contact.cta"></a>
       </div>
       <div class="card card-links card-g">
-        <a href="mailto:albert.gonzalez.rossell@gmail.com" class="link-row"><i class="fa-solid fa-envelope link-icon"></i> albert.gonzalez.rossell@gmail.com</a>
+        <a href="/cdn-cgi/l/email-protection#4b2a27292e393f652c2425312a272e3165392438382e27270b2c262a222765282426" class="link-row"><i class="fa-solid fa-envelope link-icon"></i> <span class="__cf_email__" data-cfemail="e988858b8c9b9dc78e86879388858c93c79b869a9a8c8585a98e84888085c78a8684">[email&#160;protected]</span></a>
         <a href="https://github.com/albertgo" target="_blank" class="link-row"><i class="fa-brands fa-github link-icon"></i> github.com/albertgo</a>
         <a href="https://www.instagram.com/juga_truites" target="_blank" class="link-row"><i class="fa-brands fa-instagram link-icon"></i> @juga_truites</a>
         <a href="https://www.linkedin.com/in/albertgonzalezrossell" target="_blank" class="link-row"><i class="fa-brands fa-linkedin link-icon"></i> linkedin &middot; albertgr</a>
@@ -260,7 +268,7 @@
     <div class="footer-live"><span class="live-dot"></span><span data-i18n="footer.available"></span></div>
     <span>Albert González Rossell &copy; 2026</span>
   </footer>
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     const T = {
       ca: {
         "nav.about": "Sobre mi", "nav.skills": "Stack", "nav.projects": "Projectes", "nav.contact": "Contacte",
