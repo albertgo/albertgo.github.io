@@ -11,22 +11,32 @@
   <style>
     :root{--bg:#080810;--bg2:#0e0e1a;--bg3:#13131f;--border:rgba(255,255,255,0.06);--text:#f0f0ff;--muted:#6060a0;--neon-g:#00ffaa;--neon-p:#bf5fff;--neon-b:#00cfff;--neon-y:#ffdd00;--mono:"JetBrains Mono",monospace;--sans:"Space Grotesk",sans-serif;}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    html{scroll-behavior:smooth;}
+    html{scroll-behavior:smooth;font-size:15px;}
     body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden;}
     body::after{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);}
     nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;background:rgba(8,8,16,0.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
     .nav-logo{font-family:var(--mono);font-size:0.85rem;font-weight:500;color:var(--neon-g);letter-spacing:0.05em;}
     .nav-logo em{color:var(--muted);font-style:normal;}
-    .nav-right{display:flex;align-items:center;gap:1.5rem;}
+    .nav-right{display:flex;align-items:center;gap:1rem;}
     nav ul{display:flex;gap:1.5rem;list-style:none;}
     nav ul a{text-decoration:none;color:var(--muted);font-family:var(--mono);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s;}
     nav ul a:hover{color:var(--neon-g);}
-    .lang-switcher{display:flex;gap:2px;background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:3px;}
-    .lang-btn{background:none;border:none;cursor:pointer;font-family:var(--mono);font-size:0.65rem;color:var(--muted);padding:4px 8px;border-radius:3px;transition:all 0.15s;text-transform:uppercase;letter-spacing:0.06em;}
-    .lang-btn:hover{color:var(--text);}
+
+    /* Switchers */
+    .nav-controls{display:flex;align-items:center;gap:0.5rem;}
+    .lang-switcher,.size-switcher{display:flex;gap:2px;background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:3px;}
+    .lang-btn,.size-btn{background:none;border:none;cursor:pointer;font-family:var(--mono);font-size:0.65rem;color:var(--muted);padding:4px 8px;border-radius:3px;transition:all 0.15s;text-transform:uppercase;letter-spacing:0.06em;line-height:1;}
+    .lang-btn:hover,.size-btn:hover{color:var(--text);}
     .lang-btn.active{background:var(--neon-g);color:#080810;font-weight:600;}
+    .size-btn.active{background:var(--neon-b);color:#080810;font-weight:700;}
+    /* Size button label sizes */
+    .size-btn[data-size="sm"]{font-size:0.6rem;}
+    .size-btn[data-size="md"]{font-size:0.72rem;}
+    .size-btn[data-size="lg"]{font-size:0.85rem;}
+    .nav-divider{width:1px;height:18px;background:var(--border);}
+
     main{max-width:1200px;margin:0 auto;padding:5.5rem 1.5rem 2rem;}
-    .bento{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:80px;gap:12px;}
+    .bento{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:minmax(80px, auto);gap:12px;}
     .card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:1.5rem;overflow:hidden;position:relative;transition:border-color 0.25s,transform 0.25s;}
     .card:hover{transform:translateY(-2px);}
     .card::before{content:"";position:absolute;inset:0;border-radius:inherit;opacity:0;transition:opacity 0.3s;pointer-events:none;}
@@ -124,6 +134,7 @@
       nav{padding:0.75rem 1rem;flex-wrap:wrap;gap:0.5rem;}
       main{padding:5rem 1rem 1.5rem;}
       nav ul{gap:0.75rem;}
+      .nav-controls{gap:0.35rem;}
     }
   </style>
 </head>
@@ -137,10 +148,20 @@
         <li><a href="#projects" data-i18n="nav.projects"></a></li>
         <li><a href="#contact" data-i18n="nav.contact"></a></li>
       </ul>
-      <div class="lang-switcher">
-        <button class="lang-btn" onclick="setLang('ca')">CA</button>
-        <button class="lang-btn" onclick="setLang('es')">ES</button>
-        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <div class="nav-controls">
+        <!-- Selector de mida de lletra -->
+        <div class="size-switcher">
+          <button class="size-btn" data-size="sm" onclick="setSize('sm')" title="Lletra petita">A</button>
+          <button class="size-btn" data-size="md" onclick="setSize('md')" title="Lletra normal">A</button>
+          <button class="size-btn" data-size="lg" onclick="setSize('lg')" title="Lletra gran">A</button>
+        </div>
+        <div class="nav-divider"></div>
+        <!-- Selector d'idioma -->
+        <div class="lang-switcher">
+          <button class="lang-btn" onclick="setLang('ca')">CA</button>
+          <button class="lang-btn" onclick="setLang('es')">ES</button>
+          <button class="lang-btn" onclick="setLang('en')">EN</button>
+        </div>
       </div>
     </div>
   </nav>
@@ -163,7 +184,7 @@
         <p data-i18n="hero.desc"></p>
         <div class="hero-btns">
           <a href="#contact" class="btn btn-neon" data-i18n="hero.cta"></a>
-          <a href="https://github.com/albertgo" target="_blank" class="fa-brands fa-github link-icon">&#8997; GitHub</a>
+          <a href="https://github.com/albertgo" target="_blank" class="btn btn-ghost"><i class="fa-brands fa-github"></i> GitHub</a>
         </div>
       </div>
       <div class="card card-status card-g" id="about">
@@ -244,25 +265,25 @@
       ca: {
         "nav.about": "Sobre mi", "nav.skills": "Stack", "nav.projects": "Projectes", "nav.contact": "Contacte",
         "hero.eyebrow": "Full Stack Developer &middot; Igualada",
-        "hero.desc": "M’agrada fer les coses simples per dins i boniques per fora.",
-        "hero.cta": "→ Contacta’m",
+        "hero.desc": "M'agrada fer les coses simples per dins i boniques per fora.",
+        "hero.cta": "→ Contacta'm",
         "status.role": "Full Stack Developer",
         "status.degree": "Grau en Enginyeria Informàtica (en curs)",
         "status.available": "Disponible", "status.open": "Obert a projectes",
         "role.label": "Especialitat", "role.title": "Backend & sistemes\ncrítics de producció",
         "about.label": "Sobre mi",
-        "about.text": "Dissenyo i mantinc sistemes CRM crítics. M’apassiona l’arquitectura de software neta, les bones pràctiques i la integració amb APIs. A la UOC estudio Enginyeria Informàtica compaginant-ho amb la feina a temps complet.",
+        "about.text": "Dissenyo i mantinc sistemes CRM crítics. M'apassiona l'arquitectura de software neta, les bones pràctiques i la integració amb APIs. A la UOC estudio Enginyeria Informàtica compaginant-ho amb la feina a temps complet.",
         "about.chip.edu": "&#127891; UOC", "about.chip.langs": "&#128483; CA &middot; ES &middot; EN",
         "stack.label": "Stack tecnològic",
         "projects.label": "Projectes",
         "proj.1.title": "CRM Telecomunicacions & Energia",
         "proj.1.desc": "Sistema de gestió integral per a clients i contractes de fibra, VoIP, mòbil i energia.",
-        "proj.2.title": "Gestió d’Obres de Xarxa",
-        "proj.2.desc": "Mòdul de planificació de desplegaments FTTH amb màquina d’estats i càlcul de ROI.",
+        "proj.2.title": "Gestió d'Obres de Xarxa",
+        "proj.2.desc": "Mòdul de planificació de desplegaments FTTH amb màquina d'estats i càlcul de ROI.",
         "proj.3.title": "Automatització de Fluxos Financers",
         "proj.3.desc": "Pipeline automatitzat amb signatura digital, integracions externes i notificacions legals.",
         "proj.4.title": "Integracions de tercers", "proj.4.desc": "Integració de sistemes de tercers via API REST",
-        "proj.5.title": "juga_truites", "proj.5.desc": "Compte d’Instagram sobre jocs de taula. Contingut en català per a la comunitat jugadora.",
+        "proj.5.title": "juga_truites", "proj.5.desc": "Compte d'Instagram sobre jocs de taula. Contingut en català per a la comunitat jugadora.",
         "contact.label": "Contacte", "contact.title": "Parlem?", "contact.desc": "Obert a col·laboracions i consultes tècniques.", "contact.cta": "→ Escriu-me",
         "interests.label": "Fora del codi",
         "int.cycling": "Ciclisme", "int.gym": "Gimnàs", "int.boardgames": "Jocs de taula",
@@ -327,6 +348,7 @@
       }
     };
 
+    // ── IDIOMA ──────────────────────────────────────────────
     let lang = localStorage.getItem("lang") || "ca";
 
     function setLang(l) {
@@ -352,11 +374,26 @@
       });
     }
 
+    // ── MIDA DE LLETRA ──────────────────────────────────────
+    const sizes = { sm: '14px', md: '16px', lg: '18px' };
+
+    function setSize(s) {
+      document.documentElement.style.fontSize = sizes[s];
+      localStorage.setItem("fontSize", s);
+      document.querySelectorAll(".size-btn").forEach(function(b) {
+        b.classList.toggle("active", b.getAttribute("data-size") === s);
+      });
+    }
+
+    // ── INIT ────────────────────────────────────────────────
     apply();
     document.documentElement.lang = lang;
     document.querySelectorAll(".lang-btn").forEach(function(b) {
       b.classList.toggle("active", b.textContent.toLowerCase() === lang);
     });
+
+    var savedSize = localStorage.getItem("fontSize") || "lg";
+    setSize(savedSize);
   </script>
 </body>
 </html>
