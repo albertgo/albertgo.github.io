@@ -133,23 +133,82 @@
     .live-dot{width:6px;height:6px;border-radius:50%;background:var(--neon-g);box-shadow:0 0 6px var(--neon-g);animation:pulse 2s ease-in-out infinite;}
     [data-i18n]{transition:opacity 0.18s;}
     body.lang-switching [data-i18n]{opacity:0;}
+    /* Background ambient lights */
+    .bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+    .glow{position:absolute;border-radius:50%;filter:blur(90px);}
+    .glow-g{width:700px;height:500px;background:rgba(0,255,170,0.07);top:-5%;left:-5%;animation:glowFloat 20s ease-in-out infinite;}
+    .glow-p{width:550px;height:650px;background:rgba(191,95,255,0.06);top:35%;right:-8%;animation:glowFloat 25s ease-in-out infinite;animation-delay:-9s;}
+    .glow-b{width:450px;height:350px;background:rgba(0,207,255,0.05);bottom:5%;left:35%;animation:glowFloat 18s ease-in-out infinite;animation-delay:-14s;}
+    @keyframes glowFloat{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(40px,-30px) scale(1.06);}66%{transform:translate(-25px,35px) scale(0.94);}}
     @media(max-width:900px){
       .bento{grid-template-columns:1fr 1fr;grid-auto-rows:auto;gap:10px;}
-      .card-hero,.card-status,.card-role,.card-about,.card-stack,.card-projects,.card-contact,.card-links,.card-interests,.card-location{grid-column:1/-1!important;grid-row:auto!important;}
+      .card-hero,.card-status,.card-role,.card-about,.card-stack,.card-projects,.card-contact,.card-links,.card-interests,.card-location,.card-terminal{grid-column:1/-1!important;grid-row:auto!important;}
       .card-hero{min-height:300px;}
     }
+    /* ── HAMBURGER ──────────────────────────────── */
+    .nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:6px;margin-left:0.5rem;}
+    .nav-hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:1px;transition:transform 0.2s,opacity 0.2s;}
+    .nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .nav-hamburger.open span:nth-child(2){opacity:0;}
+    .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
     @media(max-width:600px){
-      nav{padding:0.75rem 1rem;flex-wrap:wrap;gap:0.5rem;}
+      nav{padding:0.75rem 1rem;flex-wrap:nowrap;gap:0;}
       main{padding:5rem 1rem 1.5rem;}
-      nav ul{gap:0.75rem;}
-      .nav-controls{gap:0.35rem;}
+      .nav-hamburger{display:flex;}
+      .nav-right{position:fixed;top:53px;left:0;right:0;flex-direction:column;align-items:flex-start;gap:1.25rem;background:rgba(8,8,16,0.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:1.25rem 1.5rem;transform:translateY(-110%);opacity:0;pointer-events:none;transition:transform 0.25s ease,opacity 0.2s ease;z-index:199;}
+      .nav-right.open{transform:translateY(0);opacity:1;pointer-events:auto;}
+      nav ul{flex-direction:column;gap:1rem;}
+      nav ul a{font-size:0.85rem;}
+      .nav-controls{gap:0.5rem;}
     }
+    /* ── LOAD BAR ───────────────────────────────── */
+    #load-bar{position:fixed;top:0;left:0;z-index:10000;height:2px;width:0;background:linear-gradient(90deg,var(--neon-g),var(--neon-b),var(--neon-p));box-shadow:0 0 10px var(--neon-g);pointer-events:none;}
+    /* ── SCROLL REVEAL ──────────────────────────── */
+    .card{opacity:0;transform:translateY(22px);transition:opacity 0.55s ease,transform 0.55s ease,border-color 0.25s;}
+    .card.visible{opacity:1;transform:translateY(0);}
+    .card.visible:hover{transform:translateY(-2px);}
+    /* ── NAME GRADIENT ──────────────────────────── */
+    .name-neon{background:linear-gradient(90deg,var(--neon-g),var(--neon-b) 50%,var(--neon-g));background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:nameGrad 4s linear infinite;}
+    @keyframes nameGrad{to{background-position:200% center;}}
+    /* ── SPOTLIGHT ──────────────────────────────── */
+    .spot{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity 0.3s;background:radial-gradient(circle 220px at var(--sx,50%) var(--sy,50%),rgba(255,255,255,0.045),transparent 70%);}
+    .card:hover .spot{opacity:1;}
+    /* ── SCANLINE ───────────────────────────────── */
+    .card::after{content:"";position:absolute;left:0;right:0;top:-60%;height:45%;background:linear-gradient(to bottom,transparent,rgba(255,255,255,0.03) 50%,transparent);pointer-events:none;opacity:0;}
+    .card:hover::after{opacity:1;animation:scanline 2s linear forwards;}
+    @keyframes scanline{from{top:-60%;}to{top:160%;}}
+    /* ── GLITCH ─────────────────────────────────── */
+    .card-hero h1.glitching{animation:glitchH1 0.25s steps(3) forwards;}
+    @keyframes glitchH1{0%{filter:none;transform:none;}33%{filter:hue-rotate(100deg);transform:translateX(-3px) skewX(-1deg);}66%{filter:hue-rotate(-80deg) brightness(1.3);transform:translateX(3px) skewX(1deg);}100%{filter:none;transform:none;}}
+    /* ── CANVAS PARTICLES ───────────────────────── */
+    #particle-canvas{position:fixed;inset:0;pointer-events:none;z-index:0;}
+    /* ── TERMINAL ───────────────────────────────── */
+    .card-terminal{grid-column:1/13;grid-row:15/18;font-family:var(--mono);}
+    .term-body{margin-top:0.75rem;font-size:0.8rem;line-height:2;}
+    .term-line{display:flex;gap:0.5rem;align-items:baseline;}
+    .term-prompt{color:var(--neon-g);flex-shrink:0;}
+    .term-cmd{color:var(--text);}
+    .term-result{color:var(--muted);padding-left:1.75rem;display:block;line-height:1.6;}
+    .term-cursor-el{display:inline-block;width:7px;height:0.9em;background:var(--neon-g);vertical-align:middle;animation:blink 1s step-end infinite;}
+    @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+    /* ── DESC CURSOR ────────────────────────────── */
+    .desc-cursor{display:inline-block;width:2px;height:1em;background:var(--neon-g);margin-left:2px;vertical-align:text-bottom;animation:blink 1s step-end infinite;}
   </style>
 </head>
 <body>
+  <div id="load-bar"></div>
+  <canvas id="particle-canvas"></canvas>
+  <div class="bg-glow">
+    <div class="glow glow-g"></div>
+    <div class="glow glow-p"></div>
+    <div class="glow glow-b"></div>
+  </div>
   <nav>
     <div class="nav-logo">ag<em>.</em>dev</div>
-    <div class="nav-right">
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-right" id="nav-right">
       <ul>
         <li><a href="#about" data-i18n="nav.about"></a></li>
         <li><a href="#stack" data-i18n="nav.skills"></a></li>
@@ -189,7 +248,7 @@
           <span class="name-ghost">González</span>
           <span class="name-neon">Rossell</span>
         </h1>
-        <p data-i18n="hero.desc"></p>
+        <p data-i18n="hero.desc"><span id="hero-desc-text"></span><span class="desc-cursor"></span></p>
         <div class="hero-btns">
           <a href="#contact" class="btn btn-neon" data-i18n="hero.cta"></a>
           <a href="https://github.com/albertgo" target="_blank" class="btn btn-ghost"><i class="fa-brands fa-github"></i> GitHub</a>
@@ -262,6 +321,10 @@
         <div class="location-big">Igualada<br><span class="neon">Catalunya</span></div>
         <div class="location-sub" data-i18n="loc.sub"></div>
       </div>
+      <div class="card card-terminal card-g">
+        <div class="card-label">_terminal</div>
+        <div class="term-body" id="term-output"></div>
+      </div>
     </div>
   </main>
   <footer>
@@ -273,7 +336,13 @@
       ca: {
         "nav.about": "Sobre mi", "nav.skills": "Stack", "nav.projects": "Projectes", "nav.contact": "Contacte",
         "hero.eyebrow": "Full Stack Developer &middot; Igualada",
-        "hero.desc": "M'agrada fer les coses simples per dins i boniques per fora.",
+        "hero.desc": "",
+        "hero.descs": [
+          "El bon codi és el que no cal explicar.",
+          "Sistemes complexos, solucions netes.",
+          "Arquitectura que aguanta. Codi que parla sol.",
+          "Construeixo per a les persones que mantindran el codi demà."
+        ],
         "hero.cta": "→ Contacta'm",
         "status.role": "Full Stack Developer",
         "status.degree": "Grau en Enginyeria Informàtica (en curs)",
@@ -296,12 +365,21 @@
         "interests.label": "Fora del codi",
         "int.cycling": "Ciclisme", "int.gym": "Gimnàs", "int.boardgames": "Jocs de taula",
         "int.printing": "Impressió 3D", "int.travel": "Viatges", "int.music": "Música",
-        "loc.sub": "Spain &middot; Europe", "footer.available": "Disponible per a projectes"
+        "loc.sub": "Spain &middot; Europe", "footer.available": "Disponible per a projectes",
+        "term.cmd1":"whoami","term.res1":"Albert González Rossell — Full Stack Developer",
+        "term.cmd2":"cat stack.json","term.res2":"Laravel · PHP 8 · Livewire · MySQL · PostgreSQL",
+        "term.cmd3":"echo $STATUS","term.res3":"✓ Disponible · Igualada, Catalunya"
       },
       es: {
         "nav.about": "Sobre mí", "nav.skills": "Stack", "nav.projects": "Proyectos", "nav.contact": "Contacto",
         "hero.eyebrow": "Full Stack Developer &middot; Igualada",
-        "hero.desc": "Me gusta hacer las cosas simples por dentro y bonitas por fuera.",
+        "hero.desc": "",
+        "hero.descs": [
+          "El buen código es el que no hay que explicar.",
+          "Sistemas complejos, soluciones limpias.",
+          "Arquitectura que aguanta. Código que habla solo.",
+          "Construyo para las personas que mantendrán el código mañana."
+        ],
         "hero.cta": "→ Contáctame",
         "status.role": "Full Stack Developer",
         "status.degree": "Grado en Ingeniería Informática (en curso)",
@@ -324,12 +402,21 @@
         "interests.label": "Fuera del código",
         "int.cycling": "Ciclismo", "int.gym": "Gimnasio", "int.boardgames": "Juegos de mesa",
         "int.printing": "Impresión 3D", "int.travel": "Viajes", "int.music": "Música",
-        "loc.sub": "Spain &middot; Europe", "footer.available": "Disponible para proyectos"
+        "loc.sub": "Spain &middot; Europe", "footer.available": "Disponible para proyectos",
+        "term.cmd1":"whoami","term.res1":"Albert González Rossell — Full Stack Developer",
+        "term.cmd2":"cat stack.json","term.res2":"Laravel · PHP 8 · Livewire · MySQL · PostgreSQL",
+        "term.cmd3":"echo $STATUS","term.res3":"✓ Disponible · Igualada, Catalunya"
       },
       en: {
         "nav.about": "About", "nav.skills": "Stack", "nav.projects": "Projects", "nav.contact": "Contact",
         "hero.eyebrow": "Full Stack Developer &middot; Igualada",
-        "hero.desc": "I like to make things simple on the inside and beautiful on the outside.",
+        "hero.desc": "",
+        "hero.descs": [
+          "Good code is the kind that needs no explanation.",
+          "Complex systems, clean solutions.",
+          "Architecture that holds. Code that speaks for itself.",
+          "I build for the people who will maintain the code tomorrow."
+        ],
         "hero.cta": "→ Get in touch",
         "status.role": "Full Stack Developer",
         "status.degree": "Computer Engineering (in progress)",
@@ -352,7 +439,10 @@
         "interests.label": "Outside of code",
         "int.cycling": "Cycling", "int.gym": "Gym", "int.boardgames": "Board games",
         "int.printing": "3D Printing", "int.travel": "Travel", "int.music": "Music",
-        "loc.sub": "Spain &middot; Europe", "footer.available": "Available for projects"
+        "loc.sub": "Spain &middot; Europe", "footer.available": "Available for projects",
+        "term.cmd1":"whoami","term.res1":"Albert González Rossell — Full Stack Developer",
+        "term.cmd2":"cat stack.json","term.res2":"Laravel · PHP 8 · Livewire · MySQL · PostgreSQL",
+        "term.cmd3":"echo $STATUS","term.res3":"✓ Available · Igualada, Catalunya"
       }
     };
 
@@ -366,6 +456,9 @@
         lang = l;
         localStorage.setItem("lang", l);
         apply();
+        typeEyebrow(T[l]['hero.eyebrow']);
+        typeDesc(true);
+        typeTerminal();
         document.documentElement.lang = l;
         document.body.classList.remove("lang-switching");
         document.querySelectorAll(".lang-btn").forEach(function(b) {
@@ -378,6 +471,7 @@
       var t = T[lang];
       document.querySelectorAll("[data-i18n]").forEach(function(el) {
         var k = el.getAttribute("data-i18n");
+        if (k === 'hero.eyebrow' || k === 'hero.desc') return;
         if (t[k] !== undefined) el.innerHTML = t[k];
       });
     }
@@ -393,8 +487,188 @@
       });
     }
 
-    // ── INIT ────────────────────────────────────────────────
+    // ── LOAD BAR ─────────────────────────────────────────
+    (function(){
+      var bar=document.getElementById('load-bar');
+      if(!bar)return;
+      var w=0,iv=setInterval(function(){w=Math.min(w+Math.random()*15,90);bar.style.width=w+'%';},80);
+      window.addEventListener('load',function(){
+        clearInterval(iv);
+        bar.style.transition='width 0.3s ease,opacity 0.5s 0.4s';
+        bar.style.width='100%';
+        setTimeout(function(){bar.style.opacity='0';},600);
+      });
+    })();
+
+    // ── SCROLL REVEAL ────────────────────────────────────
+    (function(){
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            e.target.classList.add('visible');
+            setTimeout(function(){e.target.style.transitionDelay='0s';},700);
+            io.unobserve(e.target);
+          }
+        });
+      },{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+      document.querySelectorAll('.card').forEach(function(c,i){
+        c.style.transitionDelay=(i*0.08)+'s';
+        io.observe(c);
+      });
+    })();
+
+    // ── SPOTLIGHT ────────────────────────────────────────
+    document.querySelectorAll('.card').forEach(function(card){
+      var spot=document.createElement('div');spot.className='spot';card.appendChild(spot);
+      card.addEventListener('mousemove',function(e){
+        var r=card.getBoundingClientRect();
+        spot.style.setProperty('--sx',(e.clientX-r.left)+'px');
+        spot.style.setProperty('--sy',(e.clientY-r.top)+'px');
+      });
+    });
+
+    // ── GLITCH ───────────────────────────────────────────
+    (function(){
+      var h1=document.querySelector('.card-hero h1');
+      if(!h1)return;
+      function doGlitch(){
+        h1.classList.add('glitching');
+        setTimeout(function(){h1.classList.remove('glitching');},300);
+        setTimeout(doGlitch,4000+Math.random()*8000);
+      }
+      setTimeout(doGlitch,3000+Math.random()*4000);
+    })();
+
+    // ── PARTICLES ────────────────────────────────────────
+    (function(){
+      var canvas=document.getElementById('particle-canvas');
+      if(!canvas)return;
+      var ctx=canvas.getContext('2d'),W,H,pts=[];
+      var N=55,MAXD=130;
+      function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+      resize();window.addEventListener('resize',resize);
+      for(var i=0;i<N;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-0.5)*0.4,vy:(Math.random()-0.5)*0.4});
+      function frame(){
+        ctx.clearRect(0,0,W,H);
+        for(var i=0;i<N;i++){
+          var p=pts[i];
+          p.x+=p.vx;p.y+=p.vy;
+          if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+          ctx.beginPath();ctx.arc(p.x,p.y,1.5,0,6.28);ctx.fillStyle='rgba(0,255,170,0.5)';ctx.fill();
+          for(var j=i+1;j<N;j++){
+            var q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy);
+            if(d<MAXD){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle='rgba(0,255,170,'+(1-d/MAXD)*0.12+')';ctx.lineWidth=0.6;ctx.stroke();}
+          }
+        }
+        requestAnimationFrame(frame);
+      }
+      frame();
+    })();
+
+    // ── HERO EYEBROW TYPING ──────────────────────────────
+    function typeEyebrow(htmlText){
+      var el=document.querySelector('.hero-eyebrow');
+      if(!el)return;
+      var tmp=document.createElement('span');tmp.innerHTML=htmlText;
+      var plain=tmp.textContent;
+      el.textContent='';var i=0;
+      function tick(){
+        if(i>=plain.length)return;
+        el.textContent=plain.slice(0,i+1);i++;
+        setTimeout(tick,40+Math.random()*25);
+      }
+      tick();
+    }
+
+    // ── HERO DESC TYPEWRITER ─────────────────────────────
+    var descIdx=0,descTimer=null;
+    function typeDesc(reset){
+      var phrases=T[lang]['hero.descs'];
+      var el=document.getElementById('hero-desc-text');
+      if(!el||!phrases)return;
+      if(descTimer){clearTimeout(descTimer);descTimer=null;}
+      if(reset)descIdx=0;
+      var phrase=phrases[descIdx];
+      var i=0;
+      el.textContent='';
+      function typeChar(){
+        if(i<phrase.length){
+          el.textContent=phrase.slice(0,i+1);i++;
+          descTimer=setTimeout(typeChar,45+Math.random()*30);
+        } else {
+          descTimer=setTimeout(deleteChars,2600);
+        }
+      }
+      function deleteChars(){
+        var txt=el.textContent;
+        if(txt.length>0){
+          el.textContent=txt.slice(0,-1);
+          descTimer=setTimeout(deleteChars,18+Math.random()*12);
+        } else {
+          descIdx=(descIdx+1)%phrases.length;
+          descTimer=setTimeout(typeDesc,350);
+        }
+      }
+      typeChar();
+    }
+
+    // ── TERMINAL TYPING ──────────────────────────────────
+    function typeTerminal(){
+      var t=T[lang];
+      var out=document.getElementById('term-output');
+      if(!out)return;
+      out.innerHTML='';
+      var lines=[
+        {cmd:t['term.cmd1'],res:t['term.res1']},
+        {cmd:t['term.cmd2'],res:t['term.res2']},
+        {cmd:t['term.cmd3'],res:t['term.res3']},
+      ];
+      var li=0,ci=0;
+      var cursor=document.createElement('span');cursor.className='term-cursor-el';
+      function typeLine(){
+        if(li>=lines.length){out.appendChild(cursor);return;}
+        var line=lines[li];
+        var row=document.createElement('div');row.className='term-line';
+        var prompt=document.createElement('span');prompt.className='term-prompt';prompt.textContent='❯ ';
+        var cmd=document.createElement('span');cmd.className='term-cmd';
+        row.appendChild(prompt);row.appendChild(cmd);row.appendChild(cursor);out.appendChild(row);
+        ci=0;
+        function typeCmd(){
+          if(ci>=line.cmd.length){
+            setTimeout(function(){
+              var res=document.createElement('span');res.className='term-result';res.textContent=line.res;
+              row.removeChild(cursor);out.appendChild(res);li++;setTimeout(typeLine,500);
+            },300);return;
+          }
+          cmd.textContent=line.cmd.slice(0,ci+1);ci++;setTimeout(typeCmd,55+Math.random()*40);
+        }
+        typeCmd();
+      }
+      typeLine();
+    }
+
+    // ── HAMBURGER ────────────────────────────────────────
+    (function(){
+      var btn=document.getElementById('nav-hamburger');
+      var menu=document.getElementById('nav-right');
+      if(!btn||!menu)return;
+      btn.addEventListener('click',function(){
+        btn.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+      document.querySelectorAll('nav ul a').forEach(function(a){
+        a.addEventListener('click',function(){
+          btn.classList.remove('open');
+          menu.classList.remove('open');
+        });
+      });
+    })();
+
+    // ── INIT ────────────────────────────────────────────
     apply();
+    typeEyebrow(T[lang]['hero.eyebrow']);
+    typeDesc(true);
+    typeTerminal();
     document.documentElement.lang = lang;
     document.querySelectorAll(".lang-btn").forEach(function(b) {
       b.classList.toggle("active", b.textContent.toLowerCase() === lang);
