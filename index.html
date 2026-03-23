@@ -4,7 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Albert González Rossell — Full Stack Developer</title>
-  <meta name="description" content="Full Stack Developer. Laravel, Vue.js, sistemes complexos." />
+  <meta name="description" content="Albert González Rossell — Full Stack Developer especialitzat en Laravel, PHP 8 i sistemes CRM crítics. Arquitectura neta, producció real. Basat a Igualada, Catalunya." />
+  <link rel="canonical" href="https://albertgo.github.io/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://albertgo.github.io/" />
+  <meta property="og:title" content="Albert González Rossell — Full Stack Developer" />
+  <meta property="og:description" content="Full Stack Developer especialitzat en Laravel, PHP 8 i sistemes CRM crítics. Arquitectura neta, producció real." />
+  <meta property="og:image" content="https://albertgo.github.io/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Albert González Rossell — Full Stack Developer" />
+  <meta name="twitter:description" content="Full Stack Developer especialitzat en Laravel, PHP 8 i sistemes CRM crítics." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23080810'/><text x='16' y='22' text-anchor='middle' fill='%2300ffaa' font-family='monospace' font-size='15' font-weight='bold'>ag</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
@@ -145,6 +155,30 @@
       .card-hero,.card-status,.card-role,.card-about,.card-stack,.card-projects,.card-contact,.card-links,.card-interests,.card-location,.card-terminal{grid-column:1/-1!important;grid-row:auto!important;}
       .card-hero{min-height:300px;}
     }
+    /* ── BACK TO TOP ────────────────────────────── */
+    #back-top{position:fixed;bottom:2rem;right:2rem;z-index:300;width:38px;height:38px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);color:var(--neon-g);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.85rem;opacity:0;transform:translateY(10px);transition:opacity 0.25s,transform 0.25s,border-color 0.2s,box-shadow 0.2s;pointer-events:none;}
+    #back-top.visible{opacity:1;transform:translateY(0);pointer-events:auto;}
+    #back-top:hover{border-color:var(--neon-g);box-shadow:0 0 14px rgba(0,255,170,0.25);}
+    /* ── TOAST ──────────────────────────────────── */
+    #toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(12px);background:var(--bg3);border:1px solid var(--neon-g);color:var(--neon-g);font-family:var(--mono);font-size:0.72rem;padding:0.55rem 1.1rem;border-radius:6px;opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;z-index:500;box-shadow:0 0 18px rgba(0,255,170,0.15);white-space:nowrap;}
+    #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+    /* ── THEME BUTTON ───────────────────────────── */
+    .theme-btn{background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.85rem;padding:4px 6px;transition:color 0.2s;line-height:1;}
+    .theme-btn:hover{color:var(--neon-y);}
+    /* ── LIGHT MODE ─────────────────────────────── */
+    body.light{--bg:#f2f2fa;--bg2:#e8e8f2;--bg3:#dcdcea;--border:rgba(0,0,0,0.1);--text:#080818;--muted:#5555a0;--neon-g:#00aa77;--neon-p:#8833cc;--neon-b:#0088bb;--neon-y:#aa8800;}
+    body.light::after{opacity:0;}
+    body.light .bg-glow{opacity:0.4;}
+    body.light .card-hero{background:linear-gradient(135deg,var(--bg2) 60%,var(--bg3));}
+    body.light .card-hero h1 .name-ghost{-webkit-text-stroke:1px rgba(0,0,0,0.45);}
+    body.light .card-location{background:linear-gradient(135deg,var(--bg2) 0%,#ccc8e0 100%);}
+    body.light nav{background:rgba(242,242,250,0.9);}
+    body.light .glow-g{background:rgba(0,160,100,0.14);}
+    body.light .glow-p{background:rgba(140,50,200,0.12);}
+    body.light .glow-b{background:rgba(0,140,190,0.10);}
+    /* ── CONTACT PULSE ──────────────────────────── */
+    @keyframes contactPulse{0%,100%{box-shadow:0 0 0 0 rgba(191,95,255,0);}50%{box-shadow:0 0 0 10px rgba(191,95,255,0.2);}}
+    .card-contact.in-view{animation:contactPulse 1s ease-out 2;}
     /* ── HAMBURGER ──────────────────────────────── */
     .nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:6px;margin-left:0.5rem;}
     .nav-hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:1px;transition:transform 0.2s,opacity 0.2s;}
@@ -222,6 +256,8 @@
           <button class="size-btn" data-size="md" onclick="setSize('md')" title="Lletra normal">A</button>
           <button class="size-btn" data-size="lg" onclick="setSize('lg')" title="Lletra gran">A</button>
         </div>
+        <div class="nav-divider"></div>
+        <button class="theme-btn" id="theme-btn" title="Canviar tema"><i class="fa-solid fa-sun" id="theme-icon"></i></button>
         <div class="nav-divider"></div>
         <!-- Selector d'idioma -->
         <div class="lang-switcher">
@@ -331,6 +367,8 @@
     <div class="footer-live"><span class="live-dot"></span><span data-i18n="footer.available"></span></div>
     <span>Albert González Rossell &copy; 2026</span>
   </footer>
+  <button id="back-top" aria-label="Tornar a dalt"><i class="fa-solid fa-arrow-up"></i></button>
+  <div id="toast"></div>
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     const T = {
       ca: {
@@ -368,7 +406,8 @@
         "loc.sub": "Spain &middot; Europe", "footer.available": "Disponible per a projectes",
         "term.cmd1":"whoami","term.res1":"Albert González Rossell — Full Stack Developer",
         "term.cmd2":"cat stack.json","term.res2":"Laravel · PHP 8 · Livewire · MySQL · PostgreSQL",
-        "term.cmd3":"echo $STATUS","term.res3":"✓ Disponible · Igualada, Catalunya"
+        "term.cmd3":"echo $STATUS","term.res3":"✓ Disponible · Igualada, Catalunya",
+        "toast.copied":"✓ Email copiat al portapapers"
       },
       es: {
         "nav.about": "Sobre mí", "nav.skills": "Stack", "nav.projects": "Proyectos", "nav.contact": "Contacto",
@@ -405,7 +444,8 @@
         "loc.sub": "Spain &middot; Europe", "footer.available": "Disponible para proyectos",
         "term.cmd1":"whoami","term.res1":"Albert González Rossell — Full Stack Developer",
         "term.cmd2":"cat stack.json","term.res2":"Laravel · PHP 8 · Livewire · MySQL · PostgreSQL",
-        "term.cmd3":"echo $STATUS","term.res3":"✓ Disponible · Igualada, Catalunya"
+        "term.cmd3":"echo $STATUS","term.res3":"✓ Disponible · Igualada, Catalunya",
+        "toast.copied":"✓ Email copiado al portapapeles"
       },
       en: {
         "nav.about": "About", "nav.skills": "Stack", "nav.projects": "Projects", "nav.contact": "Contact",
@@ -442,7 +482,8 @@
         "loc.sub": "Spain &middot; Europe", "footer.available": "Available for projects",
         "term.cmd1":"whoami","term.res1":"Albert González Rossell — Full Stack Developer",
         "term.cmd2":"cat stack.json","term.res2":"Laravel · PHP 8 · Livewire · MySQL · PostgreSQL",
-        "term.cmd3":"echo $STATUS","term.res3":"✓ Available · Igualada, Catalunya"
+        "term.cmd3":"echo $STATUS","term.res3":"✓ Available · Igualada, Catalunya",
+        "toast.copied":"✓ Email copied to clipboard"
       }
     };
 
@@ -540,6 +581,7 @@
     })();
 
     // ── PARTICLES ────────────────────────────────────────
+    var particleRGB='0,255,170';
     (function(){
       var canvas=document.getElementById('particle-canvas');
       if(!canvas)return;
@@ -554,10 +596,10 @@
           var p=pts[i];
           p.x+=p.vx;p.y+=p.vy;
           if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
-          ctx.beginPath();ctx.arc(p.x,p.y,1.5,0,6.28);ctx.fillStyle='rgba(0,255,170,0.5)';ctx.fill();
+          ctx.beginPath();ctx.arc(p.x,p.y,1.5,0,6.28);ctx.fillStyle='rgba('+particleRGB+',0.5)';ctx.fill();
           for(var j=i+1;j<N;j++){
             var q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy);
-            if(d<MAXD){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle='rgba(0,255,170,'+(1-d/MAXD)*0.12+')';ctx.lineWidth=0.6;ctx.stroke();}
+            if(d<MAXD){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle='rgba('+particleRGB+','+(1-d/MAXD)*0.15+')';ctx.lineWidth=0.6;ctx.stroke();}
           }
         }
         requestAnimationFrame(frame);
@@ -646,6 +688,62 @@
       }
       typeLine();
     }
+
+    // ── BACK TO TOP ──────────────────────────────────────
+    (function(){
+      var btn=document.getElementById('back-top');
+      if(!btn)return;
+      window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>320);},{passive:true});
+      btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+    })();
+
+    // ── TOAST ────────────────────────────────────────────
+    function showToast(msg){
+      var t=document.getElementById('toast');
+      if(!t)return;
+      t.textContent=msg;t.classList.add('show');
+      setTimeout(function(){t.classList.remove('show');},2200);
+    }
+
+    // ── COPY EMAIL ───────────────────────────────────────
+    document.querySelectorAll('a[href^="mailto:"]').forEach(function(a){
+      a.addEventListener('click',function(e){
+        e.preventDefault();
+        navigator.clipboard.writeText('albert.gonzalez.rossell@gmail.com').then(function(){
+          showToast(T[lang]['toast.copied']);
+        }).catch(function(){window.location.href=a.href;});
+      });
+    });
+
+    // ── CONTACT CARD PULSE ───────────────────────────────
+    (function(){
+      var card=document.querySelector('.card-contact');
+      if(!card)return;
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            setTimeout(function(){card.classList.add('in-view');},300);
+            io.unobserve(card);
+          }
+        });
+      },{threshold:0.5});
+      io.observe(card);
+    })();
+
+    // ── LIGHT / DARK MODE ────────────────────────────────
+    var isLight=localStorage.getItem('theme')==='light';
+    function applyTheme(){
+      document.body.classList.toggle('light',isLight);
+      var icon=document.getElementById('theme-icon');
+      if(icon){icon.className=isLight?'fa-solid fa-moon':'fa-solid fa-sun';}
+      particleRGB=isLight?'0,120,80':'0,255,170';
+    }
+    applyTheme();
+    document.getElementById('theme-btn').addEventListener('click',function(){
+      isLight=!isLight;
+      localStorage.setItem('theme',isLight?'light':'dark');
+      applyTheme();
+    });
 
     // ── HAMBURGER ────────────────────────────────────────
     (function(){
